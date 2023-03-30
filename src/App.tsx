@@ -1,11 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { RouterInfo } from './Router'
+import '@styles/reset.scss'
+import '@styles/theme.scss'
 
 const RouterObject = createBrowserRouter(RouterInfo)
 
 function App() {
   return (
-    <div className="App">
+    <div className="container">
       <RouterProvider router={RouterObject} />
     </div>
   )

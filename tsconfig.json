@@ -20,6 +20,7 @@
       "@pages/*": ["src/pages/*"],
       "@components/*": ["src/components/*"],
       "@styles/*": ["src/styles/*"],
+      "@customTypes/*": ["src/types/*"],
     }
   },
   "include": ["src"],

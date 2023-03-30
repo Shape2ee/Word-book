@@ -1,0 +1,12 @@
+@charset "utf-8";
+@import "./variables";
+
+html {
+  --color-background: #{$G-background-color};
+  --color-text: #{$G-color-black};
+  --color-white: #{$G-color-white};
+
+  .container {
+    background-color: var(--color-background);
+  }
+}

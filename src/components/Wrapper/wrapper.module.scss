@@ -1,0 +1,18 @@
+@charset "utf-8";
+@import  "@styles/_variables.scss";
+.wrapper {
+  margin: 0 auto;
+  padding-top: calc(100px + 2rem);
+  width: 90%;
+  height: 100%;
+  max-width: 1800px;
+
+}
+
+// @media screen and (max-width: 1200px) {
+//   .wrapper {
+//     padding: 0 2rem;
+//     width: 100%;
+//     // margin: 0 auto;
+//   } 
+// }

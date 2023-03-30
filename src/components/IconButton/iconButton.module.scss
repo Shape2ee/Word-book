@@ -1,0 +1,15 @@
+.btn {
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &.cercle {
+    display: grid;
+    place-content: center;
+    width: 4.6rem;
+    height: 4.6rem;
+    background-color: var(--color-white);
+    border-radius: 3rem; 
+  }  
+}
