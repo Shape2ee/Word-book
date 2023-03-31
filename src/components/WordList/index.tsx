@@ -16,7 +16,7 @@ const MOCK_DATA = [
 ]
 
 const MOCK_DATA_ARR = Array(10).fill({}).map((v, i) => {
-  const item = MOCK_DATA[Math.floor(Math.random() * 1)]
+  const item = MOCK_DATA[Math.floor(Math.random() * 2)]
   return {
     id: 10 - i,
     word: item.word,

@@ -4,24 +4,46 @@ import Title from '@components/Title';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import WordList from '@components/WordList';
+import { useAppSelector } from '@hooks/reduxHooks';
 
 const Main = () => {
+  const wordList = useAppSelector((state) => state.word.wordList)
+  console.log(wordList)
   const [edit, setEdit] = useState<boolean>(false)
+  const [btnIconStatus, setBtnIconStatus]= useState<string>('add')
+  const [btnTextStatus, setBtnTextStatus]= useState<string>('리스트 추가하기')
+  
+  const handleClickEdit = () => {
+    if (!edit) {
+      setEdit(true)
+      setBtnIconStatus('checkLine')
+      setBtnTextStatus('전체 선택')
+    } else {
+      setEdit(false)
+      setBtnIconStatus('add')
+      setBtnTextStatus('리스트 추가하기')
+    }
+  }
+
   const handleClickAdd = () => {
     console.log('add')
   }
 
-  const handleClickEdit = () => {
-    setEdit(!edit)
+  const handleAllChecked = () => {
+    console.log('handleAllChecked')
   }
+
+  
 
   return (
     <div className={$.main_contianer}>
       <div className={$.title_wrap}>
         <Title text='나만의 단어장' />
         <div className={$.btn_wrap}>
+          <Button text={btnTextStatus} onClick={btnIconStatus === 'add' ? handleClickAdd : handleAllChecked} fill >
+            <Icon kinds={btnIconStatus}/>
+          </Button>
           <Button text='편집' onClick={handleClickEdit} cercle />
-          <Button text={<Icon kinds='add'/>} onClick={handleClickAdd} cercle />
         </div>
       </div>
       <WordList isEdit={edit} />

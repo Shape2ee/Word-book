@@ -3,7 +3,8 @@ import {
   BsPlus,
   BsCalendarDate,
   BsCheckCircle,
-  BsCheckCircleFill
+  BsCheckCircleFill,
+  BsCheck
 } from "react-icons/bs";
 
 interface IconButtonList {
@@ -31,5 +32,9 @@ export const ICON_BUTTON_LIST: IconButtonList[] = [
   {
     kinds: 'checked',
     element: <BsCheckCircleFill />
+  },
+  {
+    kinds: 'checkLine',
+    element: <BsCheck />
   },
 ]

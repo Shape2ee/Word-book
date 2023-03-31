@@ -21,6 +21,8 @@
       "@components/*": ["src/components/*"],
       "@styles/*": ["src/styles/*"],
       "@customTypes/*": ["src/types/*"],
+      "@customModules/*": ["src/module/*"],
+      "@hooks/*": ["src/hooks/*"],
     }
   },
   "include": ["src"],
