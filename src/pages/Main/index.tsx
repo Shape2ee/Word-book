@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useAppSelector, useAppDispatch } from '@hooks/reduxHooks';
+import { useNavigate } from 'react-router-dom';
 import $ from './main.module.scss'
 import Title from '@components/Title';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import WordList from '@components/WordList';
-import { useAppSelector } from '@hooks/reduxHooks';
 
 const Main = () => {
+  const navigate = useNavigate()
   const wordList = useAppSelector((state) => state.word.wordList)
   console.log(wordList)
   const [edit, setEdit] = useState<boolean>(false)
@@ -27,13 +29,12 @@ const Main = () => {
 
   const handleClickAdd = () => {
     console.log('add')
+    navigate('/add')
   }
 
   const handleAllChecked = () => {
     console.log('handleAllChecked')
   }
-
-  
 
   return (
     <div className={$.main_contianer}>

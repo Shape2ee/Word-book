@@ -1,6 +1,7 @@
 import Layout from '@pages/Layout'
 import Main from '@pages/Main'
 import WordTest from '@pages/WordTest'
+import AddWord from '@pages/AddWord'
 
 export const RoutePage = [
   {
@@ -12,6 +13,11 @@ export const RoutePage = [
     path: '/test',
     element: <WordTest />,
     label: '단어 시험'
+  },
+  {
+    path: '/add',
+    element: <AddWord />,
+    label: '단어 추가'
   },
 ]
 
