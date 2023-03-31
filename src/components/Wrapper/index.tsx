@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from 'react'
 import $ from './wrapper.module.scss'
 
 const Wrapper = ({ children }: { children: ReactNode}) => {

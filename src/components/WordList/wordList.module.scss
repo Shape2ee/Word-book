@@ -1,0 +1,9 @@
+.word_list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 300px;
+  margin-top: 3rem;
+  height: 100%;
+  min-height: 100vh;
+}

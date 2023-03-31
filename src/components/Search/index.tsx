@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import $ from './search.module.scss'
-import IconButton from '@components/IconButton';
+import Button from '@components/Button';
+import Icon from '@components/Icon';
 
 const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -18,7 +19,7 @@ const Search = () => {
   return (
     <form onSubmit={handleFormSubmit} className={$.search_form}>
       <input type="text" name="search" ref={inputRef} placeholder='검색어를 입력해주세요.' />
-      <IconButton text='search' icon />
+      <Button text={<Icon kinds={'search'}/>} />
     </form>
   );
 };

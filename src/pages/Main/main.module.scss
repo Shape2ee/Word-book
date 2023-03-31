@@ -4,6 +4,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
 
+  .btn_wrap {
+    display: flex;
+
+    button {
+      margin-left: 1.6rem;
+    }
   }
 }

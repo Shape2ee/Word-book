@@ -3,8 +3,11 @@
 
 html {
   --color-background: #{$G-background-color};
-  --color-text: #{$G-color-black};
   --color-white: #{$G-color-white};
+  --color-black: #{$G-color-black};
+  --color-gray555: #{$G-color-gray555};
+  --color-gray999: #{$G-color-gray999};
+  --color-f5f5f5: #{$G-color-bg-f5f5f5};
 
   .container {
     background-color: var(--color-background);
