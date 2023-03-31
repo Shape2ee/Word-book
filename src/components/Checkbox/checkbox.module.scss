@@ -1,6 +1,12 @@
 @charset 'utf-8';
 .checkbox {
+  // position: relative;
+
+  svg {
+    width: 4rem;
+    height: 4rem;
+  }
   input[type=checkbox] {
-    
+    display: none;
   }
 }
