@@ -12,21 +12,24 @@ const Main = () => {
   const wordList = useAppSelector((state) => state.word.wordList)
   console.log(wordList)
   const [edit, setEdit] = useState<boolean>(false)
-  const [btnIconStatus, setBtnIconStatus]= useState<string>('add')
-  const [btnTextStatus, setBtnTextStatus]= useState<string>('리스트 추가하기')
-  
+  const [btnIconState, setBtnIconState]= useState<string>('add')
+  const [btnTextState, setBtnTextState]= useState<string>('리스트 추가하기')
+  const [btnModeState, setBtnModeState] = useState<string>('편집')
+
   const handleClickEdit = () => {
     if (!edit) {
       setEdit(true)
-      setBtnIconStatus('checkLine')
-      setBtnTextStatus('전체 선택')
+      setBtnIconState('checkLine')
+      setBtnTextState('전체 선택')
+      setBtnModeState('완료')
     } else {
       setEdit(false)
-      setBtnIconStatus('add')
-      setBtnTextStatus('리스트 추가하기')
+      setBtnIconState('add')
+      setBtnTextState('리스트 추가하기')
+      setBtnModeState('편집')
     }
   }
-
+  
   const handleClickAdd = () => {
     console.log('add')
     navigate('/add')
@@ -36,18 +39,25 @@ const Main = () => {
     console.log('handleAllChecked')
   }
 
+  const handelClickDelete = () => {
+    console.log('handelClickDelete')
+  }
+
   return (
     <div className={$.main_contianer}>
       <div className={$.title_wrap}>
         <Title text='나만의 단어장' />
         <div className={$.btn_wrap}>
-          <Button text={btnTextStatus} 
-            onClick={btnIconStatus === 'add' ? handleClickAdd : handleAllChecked}
+          <Button text={btnTextState} 
+            onClick={btnIconState === 'add' ? handleClickAdd : handleAllChecked}
             fillWhite 
           >
-            <Icon kinds={btnIconStatus}/>
+            <Icon kinds={btnIconState}/>
           </Button>
-          <Button text='편집' onClick={handleClickEdit} cercle />
+          {edit && <Button text='삭제' onClick={handelClickDelete} cercle />}
+          <Button text={btnModeState} onClick={handleClickEdit} cercle
+            color={btnModeState === '완료' ? true : false}
+          />
         </div>
       </div>
       <WordList isEdit={edit} />

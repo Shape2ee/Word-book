@@ -13,6 +13,7 @@ interface ButtonProps {
   fillMain?: boolean
   border?: boolean
   height6?: boolean
+  color?: boolean
 }
 
 const cx = classNames.bind($)
@@ -25,7 +26,8 @@ const IconButton = ({
   width,
   fillMain,
   border,
-  height6
+  height6,
+  color
 }: ButtonProps) => {
   return (
     <button className={cx('btn', { 
@@ -34,7 +36,8 @@ const IconButton = ({
       width,
       fillMain,
       border,
-      height6
+      height6,
+      color
     })} onClick={onClick}>
       {children}
       {text}
