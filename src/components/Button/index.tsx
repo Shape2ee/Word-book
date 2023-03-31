@@ -6,15 +6,36 @@ import classNames from 'classnames/bind';
 interface ButtonProps {
   children?: JSX.Element
   text?: string
-  onClick?: () => void
+  onClick?: (e?: any) => void
   cercle?: boolean
-  fill?: boolean  
+  fillWhite?: boolean
+  width?: boolean
+  fillMain?: boolean
+  border?: boolean
+  height6?: boolean
 }
 
 const cx = classNames.bind($)
-const IconButton = ({ children, text, onClick, cercle, fill }: ButtonProps) => {
+const IconButton = ({ 
+  children,
+  text,
+  onClick,
+  cercle,
+  fillWhite,
+  width,
+  fillMain,
+  border,
+  height6
+}: ButtonProps) => {
   return (
-    <button className={cx('btn', { cercle, fill })} onClick={onClick}>
+    <button className={cx('btn', { 
+      cercle,
+      fillWhite,
+      width,
+      fillMain,
+      border,
+      height6
+    })} onClick={onClick}>
       {children}
       {text}
     </button>

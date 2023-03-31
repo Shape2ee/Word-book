@@ -41,7 +41,10 @@ const Main = () => {
       <div className={$.title_wrap}>
         <Title text='나만의 단어장' />
         <div className={$.btn_wrap}>
-          <Button text={btnTextStatus} onClick={btnIconStatus === 'add' ? handleClickAdd : handleAllChecked} fill >
+          <Button text={btnTextStatus} 
+            onClick={btnIconStatus === 'add' ? handleClickAdd : handleAllChecked}
+            fillWhite 
+          >
             <Icon kinds={btnIconStatus}/>
           </Button>
           <Button text='편집' onClick={handleClickEdit} cercle />
