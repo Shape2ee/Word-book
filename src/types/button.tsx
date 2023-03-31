@@ -1,6 +1,7 @@
+import { ReactNode } from 'react';
+
 export interface ButtonProps {
-  text: string,
+  text: string | JSX.Element
   onClick?: () => void
-  icon?: boolean,
   cercle?: boolean
 }

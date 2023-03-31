@@ -1,12 +1,16 @@
 import React from 'react';
+import $ from './iconButton.module.scss'
+import classNames from 'classnames/bind';
 import { ButtonProps } from '@customTypes/button';
 
-const Button = ({ text, onClick, }: ButtonProps) => {
+
+const cx = classNames.bind($)
+const IconButton = ({ text, onClick, cercle }: ButtonProps) => {
   return (
-    <button onClick={onClick}>
+    <button className={cx('btn', { cercle })} onClick={onClick}>
       {text}
     </button>
   );
 };
 
-export default Button;
+export default IconButton;
