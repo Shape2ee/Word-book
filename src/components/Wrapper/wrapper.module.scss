@@ -2,9 +2,8 @@
 @import  "@styles/_variables.scss";
 .wrapper {
   position: relative;
-  margin-left: 200px;
   padding: 0 4rem;
-  width: calc(100% - 200px);
+  width: 100%;
   max-width: 1800px;
   height: 100%;
 }

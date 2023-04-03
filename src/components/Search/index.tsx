@@ -17,12 +17,14 @@ const Search = () => {
   }
 
   return (
-    <form onSubmit={handleFormSubmit} className={$.search_form}>
-      <input type="text" name="search" ref={inputRef} placeholder='검색어를 입력해주세요.' />
-      <Button>
-        <Icon kinds={'search'}/>
-      </Button>
-    </form>
+    <div className={$.search_container}>
+      <form onSubmit={handleFormSubmit} className={$.search_form}>
+        <input type="text" name="search" ref={inputRef} placeholder='검색어를 입력해주세요.' />
+        <Button>
+          <Icon kinds={'search'}/>
+        </Button>
+      </form>
+    </div>
   );
 };
 

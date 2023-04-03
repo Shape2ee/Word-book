@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from './layout.module.scss'
 import { Outlet } from 'react-router-dom'
 import Wrapper from '@components/Wrapper';
 import Header from '@components/Header'
@@ -11,10 +12,12 @@ const Layout = () => {
     <Header>
       <Nav />
     </Header>
-    <Wrapper>
+    <div className={$.container}>
       <Search />
-      <Outlet />
-    </Wrapper>
+      <Wrapper>
+        <Outlet />
+      </Wrapper>
+    </div>
     </>
   );
 };
