@@ -1,10 +1,12 @@
 @charset "utf-8";
 @import  "@styles/_variables.scss";
 .wrapper {
-  margin: 0 auto;
-  width: 90%;
-  height: 100%;
+  position: relative;
+  margin-left: 200px;
+  padding: 0 4rem;
+  width: calc(100% - 200px);
   max-width: 1800px;
+  height: 100%;
 }
 
 // @media screen and (max-width: 1200px) {

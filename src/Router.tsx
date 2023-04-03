@@ -7,7 +7,7 @@ export const RoutePage = [
   {
     index: true,
     element: <Main />,
-    label: '메인 홈'
+    label: '단어 노트'
   },
   {
     path: '/test',

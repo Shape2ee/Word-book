@@ -24,7 +24,7 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit }: WordItem) => {
         <div className={$.date}>
           <Icon kinds='date'/>
           <p>
-            Date: {
+            {
               new Date(timetamp).toLocaleString('ko-KR', {
                 year: 'numeric',
                 month: 'numeric',
