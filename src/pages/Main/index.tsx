@@ -39,10 +39,16 @@ const Main = () => {
   }
 
   const handleAllChecked = () => {
+    if (wordList.length <= 0) {
+      return
+    }
     setCheckedList(wordList.map((item) => item.id))
   }
 
   const handelClickDelete = () => {
+    if (checkedList.length <= 0) {
+      return
+    }
     console.log('handelClickDelete')
     checkedList.forEach((item) => {
       dispatch(deleteWord(item))
@@ -66,7 +72,7 @@ const Main = () => {
           <Button text={btnTextState} 
             onClick={btnIconState === 'add' ? handleClickAdd : handleAllChecked}
             fillWhite 
-            color={checkedList.length === wordList.length ? true : false}
+            color={checkedList.length === 0 ? false : checkedList.length === wordList.length ? true : false}
           >
             <Icon kinds={btnIconState}/>
           </Button>
