@@ -5,7 +5,7 @@ import Button from '@components/Button';
 import Icon from '@components/Icon';
 
 interface WordItem {
-  id: number
+  id: string
   word: string
   text: string
   example: string
@@ -15,29 +15,31 @@ interface WordItem {
 
 const WordItem = ({ id, word, text, example, timetamp, isEdit }: WordItem) => {
   return (
-    <div className={$.word_item}>
-      {isEdit && <Checkbox id={id} />}
-      <div className={$.item_card}>
-        <h3 className={$.title}>{word}</h3>
-        <p className={$.meaning}>{text}</p>
-        <em>{example}</em>
-        <div className={$.date}>
-          <Icon kinds='date'/>
-          <p>
-            {
-              new Date(timetamp).toLocaleString('ko-KR', {
-                year: 'numeric',
-                month: 'numeric',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-              })
-            }
-          </p>
+    <li className={$.word_item}>
+      <label>
+        {isEdit && <Checkbox id={id} />}
+        <div className={$.item_card}>
+          <h3 className={$.title}>{word}</h3>
+          <p className={$.meaning}>{text}</p>
+          <em>{example}</em>
+          <div className={$.date}>
+            <Icon kinds='date'/>
+            <p>
+              {
+                new Date(timetamp).toLocaleString('ko-KR', {
+                  year: 'numeric',
+                  month: 'numeric',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: true
+                })
+              }
+            </p>
+          </div>
         </div>
-      </div>
-    </div>
+      </label>
+    </li>
   );
 };
 

@@ -17,7 +17,7 @@ const MOCK_DATA = [
 const MOCK_DATA_ARR = Array(10).fill({}).map((v, i) => {
   const item = MOCK_DATA[Math.floor(Math.random() * 2)]
   return {
-    id: 10 - i,
+    id: 10 - i + '',
     word: item.word,
     text: item.text,
     example: item.example,
@@ -26,7 +26,7 @@ const MOCK_DATA_ARR = Array(10).fill({}).map((v, i) => {
 })
 
 interface wordList {
-  id: number,
+  id: string,
   word: string,
   text: string,
   example: string,
@@ -46,7 +46,17 @@ const wordSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      console.log(state, action)
+      const newWord = {
+        id: state.wordList.length + 1 + '',
+        word: action.payload.word,
+        text: action.payload.wordMeaning,
+        example: action.payload.wordExample,
+        timetamp: Date.now(),
+      }
+      state.wordList.unshift(newWord)
+      
+      // state.wordList.push(action.payload)
+      // console.log(state.wordList)
     }
   }
 })

@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import $ from './checkbox.module.scss'
 import Icon from '@components/Icon';
 
-const Checkbox = ({ id }: {id: number}) => {
+const Checkbox = ({ id }: {id: string}) => {
   const [isChecked, setChecked] = useState<string>('noneChecked')
 
   return (
-    <label className={$.checkbox}>
-      <input type={'checkbox'} />
+    <div className={$.checkbox}>
+      <input type={'checkbox'} id={id} />
       <Icon kinds={isChecked}/>
-    </label>
+    </div>
+    // <label className={$.checkbox}>
+    //   <input type={'checkbox'} id={id} />
+    //   <Icon kinds={isChecked}/>
+    // </label>
   );
 };
 

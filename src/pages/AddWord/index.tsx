@@ -1,12 +1,16 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from './addWord.module.scss'
 import Title from '@components/Title';
 import Button from '@components/Button'
 import Icon from '@components/Icon';
+import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
+import { add } from '@customModules/wordSlice';
 
 const AddWord = () => {
+  const wordList = useAppSelector((state) => state.word.wordList)
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const goBack = () => {
     navigate('../')
@@ -14,13 +18,21 @@ const AddWord = () => {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const fromData = new FormData(e.currentTarget)
+    const formData = new FormData(e.currentTarget)
 
-    for(let [key, value] of fromData.entries()) {
-      console.log(key, value)
+    const addWordData = {
+      word: formData.get('word'),
+      wordMeaning: formData.get('wordMeaning'),
+      wordExample: formData.get('wordExample'),
     }
+    dispatch(add(addWordData))
+    navigate('../')
   }
-  
+
+  useEffect(() => {
+    console.log(wordList)
+  }, [wordList])
+
   return (
     <div className={$.add_container}>
       <Title text='단어 추가하기'/>
