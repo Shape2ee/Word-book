@@ -6,15 +6,17 @@ import Title from '@components/Title';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import WordList from '@components/WordList';
+import { deleteWord } from '@customModules/wordSlice';
 
 const Main = () => {
   const navigate = useNavigate()
   const wordList = useAppSelector((state) => state.word.wordList)
-  console.log(wordList)
+  const dispatch = useAppDispatch()
   const [edit, setEdit] = useState<boolean>(false)
   const [btnIconState, setBtnIconState]= useState<string>('add')
   const [btnTextState, setBtnTextState]= useState<string>('리스트 추가하기')
   const [btnModeState, setBtnModeState] = useState<string>('편집')
+  const [checkedList, setCheckedList] = useState<string[]>([])
 
   const handleClickEdit = () => {
     if (!edit) {
@@ -22,6 +24,7 @@ const Main = () => {
       setBtnIconState('checkLine')
       setBtnTextState('전체 선택')
       setBtnModeState('완료')
+      setCheckedList([])
     } else {
       setEdit(false)
       setBtnIconState('add')
@@ -41,7 +44,19 @@ const Main = () => {
 
   const handelClickDelete = () => {
     console.log('handelClickDelete')
+    checkedList.forEach((item) => {
+      dispatch(deleteWord(item))
+    })
   }
+    
+  const handleCheckedItem = (id: string, isChecked: boolean) => {
+    if (isChecked) {
+      setCheckedList((prev) => [...prev, id])
+    } else {
+      setCheckedList(checkedList.filter((itemId) => itemId !== id))
+    }
+    console.log(checkedList)
+  } 
 
   return (
     <div className={$.main_contianer}>
@@ -60,7 +75,7 @@ const Main = () => {
           />
         </div>
       </div>
-      <WordList isEdit={edit} />
+      <WordList isEdit={edit} onChecked={handleCheckedItem} checkedList={checkedList} />
     </div>
   );
 };

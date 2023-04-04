@@ -5,7 +5,7 @@ import Title from '@components/Title';
 import Button from '@components/Button'
 import Icon from '@components/Icon';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
-import { add } from '@customModules/wordSlice';
+import { addWord } from '@customModules/wordSlice';
 
 const AddWord = () => {
   const wordList = useAppSelector((state) => state.word.wordList)
@@ -22,10 +22,10 @@ const AddWord = () => {
 
     const addWordData = {
       word: formData.get('word'),
-      wordMeaning: formData.get('wordMeaning'),
-      wordExample: formData.get('wordExample'),
+      text: formData.get('wordMeaning'),
+      example: formData.get('wordExample'),
     }
-    dispatch(add(addWordData))
+    dispatch(addWord(addWordData))
     navigate('../')
   }
 

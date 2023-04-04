@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from 'src/store'
 
 const MOCK_DATA = [
@@ -25,6 +25,12 @@ const MOCK_DATA_ARR = Array(10).fill({}).map((v, i) => {
   }
 })
 
+interface wordType {
+  word: string | null,
+  text: string | null,
+  example: string | null,
+}
+
 interface wordList {
   id: string,
   word: string,
@@ -45,22 +51,23 @@ const wordSlice = createSlice({
   name: 'word',
   initialState,
   reducers: {
-    add: (state, action) => {
+    addWord: (state, action) => {
       const newWord = {
         id: state.wordList.length + 1 + '',
         word: action.payload.word,
-        text: action.payload.wordMeaning,
-        example: action.payload.wordExample,
+        text: action.payload.text,
+        example: action.payload.example,
         timetamp: Date.now(),
       }
+
       state.wordList.unshift(newWord)
-      
-      // state.wordList.push(action.payload)
-      // console.log(state.wordList)
-    }
+    },
+    deleteWord: (state, action: PayloadAction<string>) => {
+      state.wordList = state.wordList.filter((item) => item.id !== action.payload)
+    } 
   }
 })
 
-export const { add } = wordSlice.actions;
+export const { addWord, deleteWord } = wordSlice.actions;
 export const selectWordList = (state: RootState) => state.word.wordList
 export default wordSlice.reducer;

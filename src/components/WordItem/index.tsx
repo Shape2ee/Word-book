@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import $ from './wordItem.module.scss'
 import Checkbox from '@components/Checkbox';
 import Button from '@components/Button';
@@ -11,13 +11,15 @@ interface WordItem {
   example: string
   timetamp: number
   isEdit: boolean
+  checkedList: string[]
+  onChecked: (id: string, isChecked: boolean) => void
 }
 
-const WordItem = ({ id, word, text, example, timetamp, isEdit }: WordItem) => {
+const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onChecked }: WordItem) => {
   return (
     <li className={$.word_item}>
       <label>
-        {isEdit && <Checkbox id={id} />}
+        {isEdit && <Checkbox id={id} isChecked={checkedList.includes(id) ? true : false} onChecked={onChecked} />}
         <div className={$.item_card}>
           <h3 className={$.title}>{word}</h3>
           <p className={$.meaning}>{text}</p>
