@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '@hooks/reduxHooks';
 import { useNavigate } from 'react-router-dom';
 import $ from './main.module.scss'
@@ -24,12 +24,12 @@ const Main = () => {
       setBtnIconState('checkLine')
       setBtnTextState('전체 선택')
       setBtnModeState('완료')
-      setCheckedList([])
     } else {
       setEdit(false)
       setBtnIconState('add')
       setBtnTextState('리스트 추가하기')
       setBtnModeState('편집')
+      setCheckedList([])
     }
   }
   
@@ -39,7 +39,7 @@ const Main = () => {
   }
 
   const handleAllChecked = () => {
-    console.log('handleAllChecked')
+    setCheckedList(wordList.map((item) => item.id))
   }
 
   const handelClickDelete = () => {
@@ -66,6 +66,7 @@ const Main = () => {
           <Button text={btnTextState} 
             onClick={btnIconState === 'add' ? handleClickAdd : handleAllChecked}
             fillWhite 
+            color={checkedList.length === wordList.length ? true : false}
           >
             <Icon kinds={btnIconState}/>
           </Button>

@@ -20,6 +20,10 @@
     background-color: var(--color-white);
     border-radius: 30px;
 
+    &.isEdit {
+      cursor: pointer;
+    }
+
     .title {
       font-size: 3rem;
       font-weight: 700;
