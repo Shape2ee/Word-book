@@ -59,7 +59,6 @@ const wordSlice = createSlice({
         example: action.payload.example,
         timetamp: Date.now(),
       }
-
       state.wordList.unshift(newWord)
     },
     deleteWord: (state, action: PayloadAction<string>) => {

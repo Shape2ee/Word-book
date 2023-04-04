@@ -7,6 +7,10 @@
     height: 4rem;
   }
   input[type=checkbox] {
-    // display: none;
+    display: none;
+
+    &:checked + svg {
+      color: var(--color-main);
+    }
   }
 }
