@@ -3,33 +3,54 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: calc(100vh - 10rem);
+  height: calc(100vh - 10rem - 2px);
   text-align: center;
 
-  form {
+  .wrap {
     margin: 0 auto;
     width: 100%;
     max-width: 500px;
-  }
 
-  h2 {
-    margin-bottom: 4rem;
+    form {
+      width: 100%;
+    }
+  
+    h2 {
+      margin-bottom: 4rem;
+    }
+  
+    input {
+      margin-bottom: 2rem;
+      padding: 0 2rem;
+      width: 100%;
+      height: 6rem;
+      font-size: 1.6rem;
+    }
+  
+    .button_wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 6rem;
+      gap: 20px;
+      margin-bottom: 2rem;
+    }
   }
+  
+  .title_wrap {
+    position: relative;
 
-  input {
-    margin-bottom: 2rem;
-    padding: 0 2rem;
-    width: 100%;
-    height: 6rem;
-    font-size: 1.6rem;
-  }
+    button {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
 
-  .button_wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 6rem;
-    gap: 20px;
-    margin-bottom: 2rem;
+      svg {
+        margin: 0;
+        width: 3rem;
+        height: 3rem;
+      }
+    }
   }
 
   .search_word {

@@ -6,7 +6,9 @@ import {
   BsCheckCircleFill,
   BsCheck,
   BsJournalBookmark, 
-  BsPencil
+  BsPencil,
+  BsChevronLeft,
+  BsThreeDotsVertical
 } from "react-icons/bs";
 
 interface IconButtonList {
@@ -46,5 +48,13 @@ export const ICON_BUTTON_LIST: IconButtonList[] = [
   {
     kinds: 'test',
     element: <BsPencil />
+  },
+  {
+    kinds: 'back',
+    element: <BsChevronLeft />
+  },
+  {
+    kinds: 'edit',
+    element: <BsThreeDotsVertical />
   },
 ]

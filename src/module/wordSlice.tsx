@@ -63,10 +63,23 @@ const wordSlice = createSlice({
     },
     deleteWord: (state, action: PayloadAction<string>) => {
       state.wordList = state.wordList.filter((item) => item.id !== action.payload)
-    } 
+    },
+    updateWord: (state, action) => {
+      const { id, word, text, example } = action.payload
+      const targetIndex = state.wordList.findIndex((item) => item.id === id)
+      if (targetIndex < 0) throw '수정할 단어가 없습니다.'
+      const newWord = {...state.wordList[targetIndex], 
+        word: word, 
+        text: text,
+        example: example
+      }
+      state.wordList.splice(targetIndex, 1, newWord)
+      console.log(action.payload.id)
+      console.log(targetIndex)
+    }
   }
 })
 
-export const { addWord, deleteWord } = wordSlice.actions;
+export const { addWord, deleteWord, updateWord } = wordSlice.actions;
 export const selectWordList = (state: RootState) => state.word.wordList
 export default wordSlice.reducer;

@@ -17,9 +17,13 @@ const AddWord = () => {
   }
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(e.target)
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
+
+    if (formData.get('word') === '' 
+      || formData.get('wordMeaning') === '') {
+      return
+    }
 
     const addWordData = {
       word: formData.get('word'),
@@ -30,23 +34,27 @@ const AddWord = () => {
     navigate('../')
   }
 
-  useEffect(() => {
-    console.log(wordList)
-  }, [wordList])
-
   return (
     <div className={$.add_container}>
-      <div>
-        <Title text='단어 추가하기'/>
+      <div className={$.wrap}>
+        <div className={$.title_wrap}>
+          <Title text='단어 추가하기'/>
+          <Button onClick={goBack}>
+            <Icon kinds='back'/>
+          </Button>
+        </div>
         <form onSubmit={handleFormSubmit}>
           <div>
-            <input type={'text'} name='word' placeholder='영어 단어를 입력해주세요.'/>
+            <input type={'text'} name='word'
+              placeholder='영어 단어를 입력해주세요.'/>
           </div>
           <div>
-            <input type={'text'} name='wordMeaning' placeholder='단어의 뜻을 입력해주세요.' />
+            <input type={'text'} name='wordMeaning'
+              placeholder='단어의 뜻을 입력해주세요.' />
           </div>
           <div>
-            <input type={'text'} name='wordExample' placeholder='예문을 입력해주세요.' />
+            <input type={'text'} name='wordExample'
+              placeholder='예문을 입력해주세요.' />
           </div>
           <div className={$.button_wrap}>
             <Button text='취소' width border onClick={goBack}/>

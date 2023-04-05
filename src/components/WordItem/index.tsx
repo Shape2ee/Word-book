@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import $ from './wordItem.module.scss'
 import classNames from 'classnames/bind';
 import Checkbox from '@components/Checkbox';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
+import { useAppDispatch } from '@hooks/reduxHooks';
+import { deleteWord, updateWord } from '@customModules/wordSlice';
 
 const cx = classNames.bind($)
 
@@ -18,15 +20,98 @@ interface WordItem {
   onChecked: (id: string, isChecked: boolean) => void
 }
 
+
+interface WordInput {
+  word: string,
+  text: string,
+  example: string
+}
+
 const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onChecked }: WordItem) => {
+  const dispatch = useAppDispatch()
+  const [isEditclicked, setEditClicked] = useState<boolean>(false)
+  const [isUpdate, setUpdate] = useState<boolean>(false)
+  const editButtonRef = useRef(null)
+  const [input, setInput] = useState<WordInput>({
+    word: word,
+    text: text,
+    example: example
+  })
+  const wordRef = useRef<HTMLInputElement>(null)
+  const textRef = useRef<HTMLInputElement>(null)
+  const exampleRef = useRef<HTMLInputElement>(null)
+
+  const handleClickEdit = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+    console.log('handleClickEdit')
+    console.log(e.currentTarget, e.target)
+    setEditClicked(!isEditclicked)
+  }
+
+  const handleClickDelete = () => {
+    dispatch(deleteWord(id))
+    setEditClicked(!isEditclicked)
+  }
+
+  const handleFocusOut = () => {
+    console.log('out')
+    setEditClicked(!isEditclicked)
+  }
+
+  const handleWordUpdate = () => {
+    setUpdate(true)
+    setEditClicked(!isEditclicked)
+  }
+  
+  const handleUpdateClear = () => {
+    if (wordRef.current && textRef.current && exampleRef.current) {
+      const newWord = {
+        id: id,
+        word: wordRef.current.value,
+        text: textRef.current.value,
+        example: exampleRef.current.value
+      }
+      dispatch(updateWord(newWord))
+    }
+    setUpdate(false)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setInput((prev) => {
+      return {...prev, [name]: value} 
+    })
+  }
+
   return (
     <li className={$.word_item}>
-      <label>
+      <label >
         {isEdit && <Checkbox id={id} isChecked={checkedList.includes(id) ? true : false} onChecked={onChecked} />}
         <div className={cx('item_card', { isEdit })}>
-          <h3 className={$.title}>{word}</h3>
-          <p className={$.meaning}>{text}</p>
-          <em>{example}</em>
+          <h3 className={$.title}>
+            { isUpdate 
+              ? <input name='word'
+                  value={input.word}
+                  ref={wordRef}
+                  onChange={handleInputChange} /> 
+              : word}
+          </h3>
+          <p className={$.meaning}>
+            { isUpdate 
+              ? <input name='text'
+                  value={input.text}
+                  ref={textRef}
+                  onChange={handleInputChange}/>
+              : text}
+          </p>
+          <em>
+            { isUpdate 
+              ? <input name='example'
+                  value={input.example}
+                  ref={exampleRef}
+                  onChange={handleInputChange}/>
+              : example}
+          </em>
           <div className={$.date}>
             <Icon kinds='date'/>
             <p>
@@ -42,6 +127,28 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
               }
             </p>
           </div>
+
+          {
+            !isEdit && (
+              <div className={$.edit_wrap} >
+                {
+                  isUpdate 
+                  ? <div onClick={handleUpdateClear}>완료</div>
+                  : <div className={$.button} onClick={handleClickEdit} 
+                    ref={editButtonRef} onBlur={handleFocusOut}>
+                    <Icon kinds='edit' />
+                  </div>
+                }
+                { isEditclicked && (
+                  <ul className={$.edit_list}>
+                    <li onClick={handleWordUpdate}>수정</li>
+                    <li onClick={handleClickDelete}>삭제</li>
+                  </ul>
+                )
+                }
+              </div>
+            )
+          }
         </div>
       </label>
     </li>
