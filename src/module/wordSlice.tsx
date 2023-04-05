@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from 'src/store'
-
+import { WordType } from '@customTypes/CustumTypes'
 const MOCK_DATA = [
   {
     word: 'apple',
@@ -25,22 +25,13 @@ const MOCK_DATA_ARR = Array(10).fill({}).map((v, i) => {
   }
 })
 
-interface wordType {
-  word: string | null,
-  text: string | null,
-  example: string | null,
-}
-
-interface wordList {
+interface WordList extends WordType {
   id: string,
-  word: string,
-  text: string,
-  example: string,
   timetamp: number,
 }
 
-interface wordSlice {
-  wordList: wordList[]
+interface WordSlice {
+  wordList: WordList[]
 }
 
 const initialState = {
@@ -66,16 +57,16 @@ const wordSlice = createSlice({
     },
     updateWord: (state, action) => {
       const { id, word, text, example } = action.payload
+      console.log(action)
       const targetIndex = state.wordList.findIndex((item) => item.id === id)
       if (targetIndex < 0) throw '수정할 단어가 없습니다.'
       const newWord = {...state.wordList[targetIndex], 
         word: word, 
         text: text,
-        example: example
+        example: example,
+        timetamp: Date.now()
       }
       state.wordList.splice(targetIndex, 1, newWord)
-      console.log(action.payload.id)
-      console.log(targetIndex)
     }
   }
 })
