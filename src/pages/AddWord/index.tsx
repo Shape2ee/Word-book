@@ -46,14 +46,18 @@ const AddWord = () => {
         <form onSubmit={handleFormSubmit}>
           <div>
             <input type={'text'} name='word'
-              placeholder='영어 단어를 입력해주세요.'/>
+              pattern="[A-Za-z]+"
+              placeholder='영어 단어를 입력해주세요.'
+              />
           </div>
           <div>
             <input type={'text'} name='wordMeaning'
+              pattern="[ㄱ-ㅎ가-힣]+"
               placeholder='단어의 뜻을 입력해주세요.' />
           </div>
           <div>
             <input type={'text'} name='wordExample'
+              pattern="[A-Za-z]+"
               placeholder='예문을 입력해주세요.' />
           </div>
           <div className={$.button_wrap}>

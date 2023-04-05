@@ -2,11 +2,10 @@ import React, { useRef, useState } from 'react';
 import $ from './wordItem.module.scss'
 import classNames from 'classnames/bind';
 import Checkbox from '@components/Checkbox';
-import Button from '@components/Button';
 import Icon from '@components/Icon';
 import { useAppDispatch } from '@hooks/reduxHooks';
 import { deleteWord, updateWord } from '@customModules/wordSlice';
-
+import { WordType } from '@customTypes/CustumTypes';
 const cx = classNames.bind($)
 
 interface WordItem {
@@ -20,19 +19,12 @@ interface WordItem {
   onChecked: (id: string, isChecked: boolean) => void
 }
 
-
-interface WordInput {
-  word: string,
-  text: string,
-  example: string
-}
-
 const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onChecked }: WordItem) => {
   const dispatch = useAppDispatch()
   const [isEditclicked, setEditClicked] = useState<boolean>(false)
   const [isUpdate, setUpdate] = useState<boolean>(false)
   const editButtonRef = useRef(null)
-  const [input, setInput] = useState<WordInput>({
+  const [input, setInput] = useState<WordType>({
     word: word,
     text: text,
     example: example
@@ -64,7 +56,9 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
   }
   
   const handleUpdateClear = () => {
+      console.log(wordRef.current, textRef.current, exampleRef.current)
     if (wordRef.current && textRef.current && exampleRef.current) {
+      console.log(wordRef.current.value)
       const newWord = {
         id: id,
         word: wordRef.current.value,
@@ -86,14 +80,17 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
   return (
     <li className={$.word_item}>
       <label >
-        {isEdit && <Checkbox id={id} isChecked={checkedList.includes(id) ? true : false} onChecked={onChecked} />}
+        {isEdit 
+          && <Checkbox id={id}
+                isChecked={checkedList.includes(id) ? true : false}
+                onChecked={onChecked} />
+        }
         <div className={cx('item_card', { isEdit })}>
           <h3 className={$.title}>
             { isUpdate 
-              ? <input name='word'
-                  value={input.word}
+              ? <input name='word' value={input.word}
                   ref={wordRef}
-                  onChange={handleInputChange} /> 
+                  onChange={handleInputChange}/>
               : word}
           </h3>
           <p className={$.meaning}>
@@ -112,29 +109,31 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
                   onChange={handleInputChange}/>
               : example}
           </em>
-          <div className={$.date}>
-            <Icon kinds='date'/>
-            <p>
-              {
-                new Date(timetamp).toLocaleString('ko-KR', {
-                  year: 'numeric',
-                  month: 'numeric',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: true
-                })
-              }
-            </p>
-          </div>
-
+          {
+            isUpdate ? (
+              <div className={$.clear_button} onClick={handleUpdateClear}>저장</div>
+            ) : <div className={$.date}>
+              <Icon kinds='date'/>
+              <p>
+                {
+                  new Date(timetamp).toLocaleString('ko-KR', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                  })
+                }
+              </p>
+            </div>
+          }
           {
             !isEdit && (
               <div className={$.edit_wrap} >
                 {
-                  isUpdate 
-                  ? <div onClick={handleUpdateClear}>완료</div>
-                  : <div className={$.button} onClick={handleClickEdit} 
+                  !isUpdate 
+                  && <div className={$.button} onClick={handleClickEdit} 
                     ref={editButtonRef} onBlur={handleFocusOut}>
                     <Icon kinds='edit' />
                   </div>
@@ -149,6 +148,7 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
               </div>
             )
           }
+
         </div>
       </label>
     </li>
