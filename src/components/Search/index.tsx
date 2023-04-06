@@ -1,29 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useRef,useEffect, useState } from 'react';
 import $ from './search.module.scss'
 import Button from '@components/Button';
 import Icon from '@components/Icon';
+import { useAppSelector } from '@hooks/reduxHooks';
 
-const Search = () => {
-  const inputRef = useRef<HTMLInputElement>(null)
+interface SearchProps {
+  value: string
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  onClick: () => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    console.log(formData.get('search'))
-
-    if (inputRef.current) {
-      inputRef.current.value = ''
-    }
-  }
-
+const Search = ({ value, onSubmit, onClick, onChange }: SearchProps) => {
+  
   return (
     <div className={$.search_container}>
-      <form onSubmit={handleFormSubmit} className={$.search_form}>
-        <input type="text" name="search" ref={inputRef} placeholder='검색어를 입력해주세요.' />
+      <form onSubmit={onSubmit} className={$.search_form}>
+        <input type="text" name="search" value={value} onChange={onChange} placeholder='검색어를 입력해주세요.' />
         <Button>
           <Icon kinds={'search'}/>
         </Button>
       </form>
+      {value && <div onClick={onClick}>취소</div>}
     </div>
   );
 };

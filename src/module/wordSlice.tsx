@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from 'src/store'
-import { WordType, WordList } from '@customTypes/CustumTypes'
+import { WordType, WordListType } from '@customTypes/CustumTypes'
 // const MOCK_DATA = [
 //   {
 //     word: 'apple',
@@ -26,7 +26,7 @@ import { WordType, WordList } from '@customTypes/CustumTypes'
 // })
 
 interface WordSlice {
-  wordList: WordList[]
+  wordList: WordListType[]
 }
 
 const initialState: WordSlice = {

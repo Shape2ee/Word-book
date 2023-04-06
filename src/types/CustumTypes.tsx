@@ -4,7 +4,7 @@ export interface WordType {
   example: string,
 }
 
-export interface WordList extends WordType {
+export interface WordListType extends WordType {
   id: string,
   timetamp: number,
 }

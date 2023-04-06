@@ -3,7 +3,7 @@ import $ from './wordList.module.scss'
 import WordItem from '@components/WordItem'
 import { useAppSelector } from '@hooks/reduxHooks';
 import classNames from 'classnames/bind';
-
+import { WordListType } from '@customTypes/CustumTypes';
 const cx = classNames.bind($)
 
 
@@ -15,9 +15,10 @@ const cx = classNames.bind($)
 //   return response
 // }
 
-const WordList = ({ isEdit, checkedList, onChecked  }: { isEdit: boolean, checkedList: string[], onChecked:(id:string, isChecked: boolean) => void }) => {
-  const wordList = useAppSelector((state) => state.word.wordList)
+const WordList = ({ wordList, isEdit, checkedList, onChecked  }: { wordList: WordListType[], isEdit: boolean, checkedList: string[], onChecked:(id:string, isChecked: boolean) => void }) => {
+  // const wordList = useAppSelector((state) => state.word.wordList)
   const [isList, setList] = useState<boolean>(false)
+  console.log(wordList)
 
   useEffect(() => {
     if (wordList.length <= 0) {
@@ -31,7 +32,7 @@ const WordList = ({ isEdit, checkedList, onChecked  }: { isEdit: boolean, checke
     <ul className={cx('word_list', { isList })}>
       {
         wordList.length <= 0 ? <li>단어를 추가해주세요!</li>
-        : wordList.map((item) => <WordItem {...item} checkedList={checkedList} onChecked={onChecked} isEdit={isEdit}/>)
+        : wordList.map((item) => <WordItem key={item.id} {...item} checkedList={checkedList} onChecked={onChecked} isEdit={isEdit}/>)
       }
     </ul>
   );

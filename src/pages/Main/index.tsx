@@ -7,22 +7,32 @@ import Button from '@components/Button';
 import Icon from '@components/Icon';
 import WordList from '@components/WordList';
 import { deleteWord, readWord } from '@customModules/wordSlice';
+import Search from '@components/Search';
+import { WordListType } from '@customTypes/CustumTypes';
 
 const Main = () => {
-  const navigate = useNavigate()
-  const wordList = useAppSelector((state) => state.word.wordList)
-  const dispatch = useAppDispatch()
+  const [wordList, setWordList] = useState<WordListType[]>([])
+  const [checkedList, setCheckedList] = useState<string[]>([])
   const [edit, setEdit] = useState<boolean>(false)
   const [btnIconState, setBtnIconState]= useState<string>('add')
   const [btnTextState, setBtnTextState]= useState<string>('리스트 추가하기')
   const [btnModeState, setBtnModeState] = useState<string>('편집')
-  const [checkedList, setCheckedList] = useState<string[]>([])
+  const [inputValue, setInputValue] = useState<string>('')
   const sessionWordList = localStorage.getItem('WordList')
-  useEffect(()=> {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const getWordList = async () => {
     if (sessionWordList !== null) {
-      dispatch(readWord(JSON.parse(sessionWordList)))
+      const wordList = await JSON.parse(sessionWordList)
+      dispatch(readWord(wordList))
+      setWordList(JSON.parse(sessionWordList))
     }
-  }, [sessionWordList])
+  }
+
+  useEffect(()=> {
+    getWordList()
+  }, [])
 
   const handleClickEdit = () => {
     if (!edit) {
@@ -70,7 +80,39 @@ const Main = () => {
     console.log(checkedList)
   } 
 
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const search = formData.get('search')
+    if (search === '' || search === null) {
+      getWordList()
+      return
+    }
+
+    if (sessionWordList !== null) {
+      const searchFilter = JSON.parse(sessionWordList).filter((v: WordListType) => {
+        return v.word.toUpperCase() === search.toString().toUpperCase()
+      })
+      console.log(wordList, searchFilter)
+      setWordList(searchFilter)
+    }
+  }
+
+  const handleResetSearch = () => {
+    setInputValue('')
+    getWordList()
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
+  }
+  
   return (
+    <>
+    <Search value={inputValue} onSubmit={handleFormSubmit} 
+     onClick={handleResetSearch} 
+     onChange={handleInputChange}
+     />
     <div className={$.main_contianer}>
       <div className={$.title_wrap}>
         <Title text='나만의 단어장' />
@@ -88,8 +130,9 @@ const Main = () => {
           />
         </div>
       </div>
-      <WordList isEdit={edit} onChecked={handleCheckedItem} checkedList={checkedList} />
+      <WordList isEdit={edit} wordList={wordList} onChecked={handleCheckedItem} checkedList={checkedList} />
     </div>
+    </>
   );
 };
 
