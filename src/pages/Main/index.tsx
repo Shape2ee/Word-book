@@ -9,6 +9,7 @@ import WordList from '@components/WordList';
 import { deleteWord, readWord } from '@customModules/wordSlice';
 import Search from '@components/Search';
 import { WordListType } from '@customTypes/CustumTypes';
+import Wrapper from '@components/Wrapper';
 
 const Main = () => {
   const [wordList, setWordList] = useState<WordListType[]>([])
@@ -18,16 +19,18 @@ const Main = () => {
   const [btnTextState, setBtnTextState]= useState<string>('리스트 추가하기')
   const [btnModeState, setBtnModeState] = useState<string>('편집')
   const [inputValue, setInputValue] = useState<string>('')
-  const sessionWordList = localStorage.getItem('WordList')
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const getWordList = async () => {
+  const getWordList = () => {
+    console.log('getWordList')
+    const sessionWordList = localStorage.getItem('WordList')
     if (sessionWordList !== null) {
-      const wordList = await JSON.parse(sessionWordList)
+      const wordList = JSON.parse(sessionWordList)
       dispatch(readWord(wordList))
-      setWordList(JSON.parse(sessionWordList))
+      setWordList(wordList)
     }
+    console.log('wordList', wordList)
   }
 
   useEffect(()=> {
@@ -61,14 +64,16 @@ const Main = () => {
     setCheckedList(wordList.map((item) => item.id))
   }
 
-  const handelClickDelete = () => {
+  const handelClickDelete = async () => {
     if (checkedList.length <= 0) {
       return
     }
-    console.log('handelClickDelete')
+    // console.log('handelClickDelete')
     checkedList.forEach((item) => {
       dispatch(deleteWord(item))
     })
+    getWordList()
+    console.log(wordList)
   }
     
   const handleCheckedItem = (id: string, isChecked: boolean) => {
@@ -81,6 +86,7 @@ const Main = () => {
   } 
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log('handleFormSubmit')
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const search = formData.get('search')
@@ -89,11 +95,11 @@ const Main = () => {
       return
     }
 
+    const sessionWordList = localStorage.getItem('WordList')
     if (sessionWordList !== null) {
       const searchFilter = JSON.parse(sessionWordList).filter((v: WordListType) => {
         return v.word.toUpperCase() === search.toString().toUpperCase()
       })
-      console.log(wordList, searchFilter)
       setWordList(searchFilter)
     }
   }
@@ -105,6 +111,10 @@ const Main = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
+
+    if (e.target.value === '') {
+      getWordList()
+    }
   }
   
   return (
@@ -113,25 +123,31 @@ const Main = () => {
      onClick={handleResetSearch} 
      onChange={handleInputChange}
      />
-    <div className={$.main_contianer}>
-      <div className={$.title_wrap}>
-        <Title text='나만의 단어장' />
-        <div className={$.btn_wrap}>
-          <Button text={btnTextState} 
-            onClick={btnIconState === 'add' ? handleClickAdd : handleAllChecked}
-            fillWhite 
-            color={checkedList.length === 0 ? false : checkedList.length === wordList.length ? true : false}
-          >
-            <Icon kinds={btnIconState}/>
-          </Button>
-          {edit && <Button text='삭제' onClick={handelClickDelete} cercle />}
-          <Button text={btnModeState} onClick={handleClickEdit} cercle
-            color={btnModeState === '완료' ? true : false}
-          />
+    <Wrapper>
+      <div className={$.main_contianer}>
+        <div className={$.title_wrap}>
+          <Title text='나만의 단어장' />
+          <div className={$.btn_wrap}>
+            <Button text={btnTextState} 
+              onClick={btnIconState === 'add' ? handleClickAdd : handleAllChecked}
+              fillWhite 
+              color={checkedList.length === 0 ? false : checkedList.length === wordList.length ? true : false}
+            >
+              <Icon kinds={btnIconState}/>
+            </Button>
+            {edit && <Button text='삭제' onClick={handelClickDelete} cercle />}
+            <Button text={btnModeState} onClick={handleClickEdit} cercle
+              color={btnModeState === '완료' ? true : false}
+            />
+          </div>
         </div>
+        <WordList isEdit={edit} 
+          wordList={wordList}
+          onChecked={handleCheckedItem}
+          checkedList={checkedList}
+          getWordList={getWordList} />
       </div>
-      <WordList isEdit={edit} wordList={wordList} onChecked={handleCheckedItem} checkedList={checkedList} />
-    </div>
+    </Wrapper>
     </>
   );
 };

@@ -12,9 +12,7 @@ const Layout = () => {
       <Nav />
     </Header>
     <div className={$.container}>
-      <Wrapper>
-        <Outlet />
-      </Wrapper>
+      <Outlet />
     </div>
     </>
   );

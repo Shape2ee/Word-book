@@ -38,11 +38,14 @@ const wordSlice = createSlice({
   initialState,
   reducers: {
     readWord: (state, action) => {
+      console.log(action)
       state.wordList = [...action.payload]
     },
     addWord: (state, action) => {
+      const arrayId = state.wordList.map((item) => Number(item.id))
+      const maxId = arrayId.length === 0 ? 0 : Math.max(...arrayId)
       const newWord = {
-        id: state.wordList.length + 1 + '',
+        id: maxId + 1 + '',
         word: action.payload.word,
         text: action.payload.text,
         example: action.payload.example,

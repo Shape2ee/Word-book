@@ -14,8 +14,15 @@ const cx = classNames.bind($)
 //     .then((data) => data)
 //   return response
 // }
+interface WordListProps { 
+  wordList: WordListType[],
+  isEdit: boolean,
+  checkedList: string[],
+  onChecked:(id:string, isChecked: boolean) => void
+  getWordList: () => void
+}
 
-const WordList = ({ wordList, isEdit, checkedList, onChecked  }: { wordList: WordListType[], isEdit: boolean, checkedList: string[], onChecked:(id:string, isChecked: boolean) => void }) => {
+const WordList = ({ wordList, isEdit, checkedList, onChecked, getWordList  }: WordListProps) => {
   // const wordList = useAppSelector((state) => state.word.wordList)
   const [isList, setList] = useState<boolean>(false)
   console.log(wordList)
@@ -32,7 +39,13 @@ const WordList = ({ wordList, isEdit, checkedList, onChecked  }: { wordList: Wor
     <ul className={cx('word_list', { isList })}>
       {
         wordList.length <= 0 ? <li>단어를 추가해주세요!</li>
-        : wordList.map((item) => <WordItem key={item.id} {...item} checkedList={checkedList} onChecked={onChecked} isEdit={isEdit}/>)
+        : wordList.map((item) => (
+          <WordItem key={item.id} {...item}
+            checkedList={checkedList}
+            onChecked={onChecked}
+            isEdit={isEdit}
+            getWordList={getWordList}/>
+          ))
       }
     </ul>
   );

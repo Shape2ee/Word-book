@@ -58,8 +58,8 @@ const AddWord = () => {
               placeholder='예문을 입력해주세요.' />
           </div>
           <div className={$.button_wrap}>
-            <Button text='취소' width border onClick={goBack}/>
-            <Button text='저장' width fillMain />
+            <div className={$.back_button} onClick={goBack}>취소</div>
+            <Button type={'submit'} text='저장' width fillMain />
           </div>
         </form>
         <Button text='영어 단어 검색해보기' onClick={() => console.log('단어 검색')} width border height6 >

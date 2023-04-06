@@ -21,7 +21,11 @@ const Search = ({ value, onSubmit, onClick, onChange }: SearchProps) => {
           <Icon kinds={'search'}/>
         </Button>
       </form>
-      {value && <div onClick={onClick}>취소</div>}
+      {value && (
+        <div className={$.reset_button} onClick={onClick}>
+          <Icon kinds='cancell' />
+        </div>
+      )}
     </div>
   );
 };

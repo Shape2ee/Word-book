@@ -8,7 +8,8 @@ import {
   BsJournalBookmark, 
   BsPencil,
   BsChevronLeft,
-  BsThreeDotsVertical
+  BsThreeDotsVertical,
+  BsX
 } from "react-icons/bs";
 
 interface IconButtonList {
@@ -56,5 +57,9 @@ export const ICON_BUTTON_LIST: IconButtonList[] = [
   {
     kinds: 'edit',
     element: <BsThreeDotsVertical />
+  },
+  {
+    kinds: 'cancell',
+    element: <BsX />
   },
 ]

@@ -17,9 +17,10 @@ interface WordItem {
   isEdit: boolean
   checkedList: string[]
   onChecked: (id: string, isChecked: boolean) => void
+  getWordList: () => void
 }
 
-const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onChecked }: WordItem) => {
+const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onChecked, getWordList }: WordItem) => {
   const dispatch = useAppDispatch()
   const [isEditclicked, setEditClicked] = useState<boolean>(false)
   const [isUpdate, setUpdate] = useState<boolean>(false)
@@ -43,11 +44,7 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
   const handleClickDelete = () => {
     dispatch(deleteWord(id))
     setEditClicked(!isEditclicked)
-  }
-
-  const handleFocusOut = () => {
-    console.log('out')
-    setEditClicked(!isEditclicked)
+    getWordList()
   }
 
   const handleWordUpdate = () => {
@@ -56,7 +53,7 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
   }
   
   const handleUpdateClear = () => {
-      console.log(wordRef.current, textRef.current, exampleRef.current)
+      console.log('handleUpdateClear')
     if (wordRef.current && textRef.current && exampleRef.current) {
       console.log(wordRef.current.value)
       const newWord = {
@@ -68,6 +65,7 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
       dispatch(updateWord(newWord))
     }
     setUpdate(false)
+    getWordList()
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,7 +132,7 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
                 {
                   !isUpdate 
                   && <div className={$.button} onClick={handleClickEdit} 
-                    ref={editButtonRef} onBlur={handleFocusOut}>
+                    ref={editButtonRef}>
                     <Icon kinds='edit' />
                   </div>
                 }

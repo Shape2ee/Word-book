@@ -30,4 +30,16 @@
       transform: translateY(-50%);
     }
   }
+
+  .reset_button {
+    position: absolute;
+    top: 50%;
+    right: 10rem;
+    transform: translateY(-50%);
+    display: grid;
+    place-content: center;
+    width: 4rem;
+    height: 4rem;
+    cursor: pointer;
+  }
 }
