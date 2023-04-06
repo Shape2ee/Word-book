@@ -6,7 +6,7 @@ import Title from '@components/Title';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import WordList from '@components/WordList';
-import { deleteWord } from '@customModules/wordSlice';
+import { deleteWord, readWord } from '@customModules/wordSlice';
 
 const Main = () => {
   const navigate = useNavigate()
@@ -17,6 +17,12 @@ const Main = () => {
   const [btnTextState, setBtnTextState]= useState<string>('리스트 추가하기')
   const [btnModeState, setBtnModeState] = useState<string>('편집')
   const [checkedList, setCheckedList] = useState<string[]>([])
+  const sessionWordList = localStorage.getItem('WordList')
+  useEffect(()=> {
+    if (sessionWordList !== null) {
+      dispatch(readWord(JSON.parse(sessionWordList)))
+    }
+  }, [sessionWordList])
 
   const handleClickEdit = () => {
     if (!edit) {

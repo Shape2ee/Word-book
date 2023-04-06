@@ -6,6 +6,15 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind($)
 
+
+// const getData = async () => {
+//   const response = await fetch('http://localhost:5173/data/mockData.json')
+//     .then((res) => res.json())
+//     .catch((err) => console.log(err))
+//     .then((data) => data)
+//   return response
+// }
+
 const WordList = ({ isEdit, checkedList, onChecked  }: { isEdit: boolean, checkedList: string[], onChecked:(id:string, isChecked: boolean) => void }) => {
   const wordList = useAppSelector((state) => state.word.wordList)
   const [isList, setList] = useState<boolean>(false)

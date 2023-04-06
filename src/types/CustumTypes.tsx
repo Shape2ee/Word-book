@@ -3,3 +3,8 @@ export interface WordType {
   text: string,
   example: string,
 }
+
+export interface WordList extends WordType {
+  id: string,
+  timetamp: number,
+}

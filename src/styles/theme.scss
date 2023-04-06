@@ -11,6 +11,9 @@ html {
   --color-f5f5f5: #{$G-color-bg-f5f5f5};
   --color-line: #{$G-color-line};
 
+  body {
+    background-color: var(--color-background);
+  }
   .container {
     background-color: var(--color-background);
   }
