@@ -6,7 +6,7 @@ import Title from '@components/Title';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import WordList from '@components/WordList';
-import { deleteWord, readWord, updateWord } from '@customModules/wordSlice';
+import { deleteWord, updateWord } from '@customModules/wordSlice';
 import Search from '@components/Search';
 import { WordListType } from '@customTypes/CustumTypes';
 import Wrapper from '@components/Wrapper';
