@@ -6,6 +6,11 @@
   svg {
     margin-right: 0.4rem;
   }
+  &.mobileNone {
+    svg {
+      margin-right: 0;
+    } 
+  }
   &.cercle {
     display: grid;
     place-content: center;
@@ -35,5 +40,13 @@
   }
   &.color {
     color: $G-color-main;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .text {
+    &.mobileNone {
+      display: none;
+    }
   }
 }

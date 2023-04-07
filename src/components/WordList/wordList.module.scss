@@ -1,3 +1,4 @@
+@charset 'utf-8';
 .word_list {
   display: grid;
   gap: 30px 20px;
@@ -18,5 +19,17 @@
       font-size: 2rem;
       color: var(--color-gray999);
     }
+  }
+}
+
+@media screen and (max-width:1200px) {
+  .word_list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width:768px) {
+  .word_list {
+    grid-template-columns: 1fr;
   }
 }

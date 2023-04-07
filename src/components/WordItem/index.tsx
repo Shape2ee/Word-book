@@ -16,9 +16,11 @@ interface WordItem {
   isEdit: boolean
   checkedList: string[]
   onChecked: (id: string, isChecked: boolean) => void
+  onDelete: (id: string) => void
+  onUpdate: (id: string, word: string, text: string) => void 
 }
 
-const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked }: WordItem) => {
+const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked, onDelete, onUpdate }: WordItem) => {
   const dispatch = useAppDispatch()
   const [isEditclicked, setEditClicked] = useState<boolean>(false)
   const [isUpdate, setUpdate] = useState<boolean>(false)
@@ -37,28 +39,13 @@ const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked }: 
     setEditClicked(!isEditclicked)
   }
 
-  const handleClickDelete = () => {
-    dispatch(deleteWord(id))
-    setEditClicked(!isEditclicked)
-  }
-
   const handleWordUpdate = () => {
     setUpdate(true)
     setEditClicked(!isEditclicked)
   }
-  
-  const handleUpdateClear = () => {
-      console.log('handleUpdateClear')
-    if (wordRef.current && textRef.current) {
-      console.log(wordRef.current.value)
-      const newWord = {
-        id: id,
-        word: wordRef.current.value,
-        text: textRef.current.value,
-      }
-      dispatch(updateWord(newWord))
-    }
-    setUpdate(false)
+
+  const handleClickDelete = () => {
+    onDelete(id)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +53,17 @@ const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked }: 
     setInput((prev) => {
       return {...prev, [name]: value} 
     })
+  }
+
+  const handleUpdateClear = () => {
+    if (wordRef.current === null || textRef.current === null) {
+      return
+    }
+    const word = wordRef.current.value
+    const text = textRef.current.value
+    onUpdate(id, word, text)
+    console.log('update')
+    setUpdate(false)
   }
 
   return (
@@ -82,7 +80,7 @@ const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked }: 
               ? <input name='word' value={input.word}
                   ref={wordRef}
                   onChange={handleInputChange}/>
-              : word}
+              : <span>{word}</span>}
           </h3>
           <p className={$.meaning}>
             { isUpdate 

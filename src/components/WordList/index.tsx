@@ -18,11 +18,13 @@ interface WordListProps {
   wordList: WordListType[],
   isEdit: boolean,
   checkedList: string[],
-  onChecked:(id:string, isChecked: boolean) => void
+  onChecked:(id: string, isChecked: boolean) => void
+  onDelete: (id: string) => void
+  onUpdate: (id: string, word: string, text: string) => void 
   // getWordList: () => void
 }
 
-const WordList = ({ wordList, isEdit, checkedList, onChecked  }: WordListProps) => {
+const WordList = ({ wordList, isEdit, checkedList, onChecked, onDelete, onUpdate  }: WordListProps) => {
   const [isList, setList] = useState<boolean>(false)
 
   useEffect(() => {
@@ -41,7 +43,9 @@ const WordList = ({ wordList, isEdit, checkedList, onChecked  }: WordListProps) 
           <WordItem key={item.id} {...item}
             checkedList={checkedList}
             onChecked={onChecked}
-            isEdit={isEdit}/>
+            isEdit={isEdit}
+            onDelete={onDelete}
+            onUpdate={onUpdate}/>
           ))
       }
     </ul>

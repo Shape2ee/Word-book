@@ -6,14 +6,14 @@ import Title from '@components/Title';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import WordList from '@components/WordList';
-import { deleteWord, readWord } from '@customModules/wordSlice';
+import { deleteWord, readWord, updateWord } from '@customModules/wordSlice';
 import Search from '@components/Search';
 import { WordListType } from '@customTypes/CustumTypes';
 import Wrapper from '@components/Wrapper';
 
 const Main = () => {
   const wordList = useAppSelector((state) => state.word.wordList)
-  // const [wordList, setWordList] = useState<WordListType[]>([])
+  // const [wordList, setWordList] = useState<WordListType[]>([...sessionWordList])
   const [checkedList, setCheckedList] = useState<string[]>([])
   const [edit, setEdit] = useState<boolean>(false)
   const [btnIconState, setBtnIconState]= useState<string>('add')
@@ -47,7 +47,11 @@ const Main = () => {
     if (wordList.length <= 0) {
       return
     }
-    // setCheckedList(wordList.map((item) => item.id))
+    if (checkedList.length === wordList.length) {
+      setCheckedList([])
+      return
+    }
+    setCheckedList(wordList.map((item) => item.id))
   }
 
   const handelClickDelete = async () => {
@@ -57,7 +61,8 @@ const Main = () => {
     }
     checkedList.forEach((item) => {
       dispatch(deleteWord(item))
-    })    
+    })
+    setCheckedList([])
   }
     
   const handleCheckedItem = (id: string, isChecked: boolean) => {
@@ -78,13 +83,11 @@ const Main = () => {
       return
     }
 
-    const sessionWordList = localStorage.getItem('WordList')
-    if (sessionWordList !== null) {
-      const searchFilter = JSON.parse(sessionWordList).filter((v: WordListType) => {
-        return v.word.toUpperCase() === search.toString().toUpperCase()
-      })
-      // setWordList(searchFilter)
-    }
+    const searchFilter = wordList.filter((v: WordListType) => {
+      return v.word.toUpperCase() === search.toString().toUpperCase()
+    })
+    
+    // setWordList(searchFilter)
   }
 
   const handleResetSearch = () => {
@@ -94,9 +97,24 @@ const Main = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
 
-    if (e.target.value === '') {
-      // return
+    // if (e.target.value === '') {
+    //   setWordList(sessionWordList)
+    // }
+  }
+
+  const handleClickDelete = (id: string) => {
+    dispatch(deleteWord(id))
+  }
+
+  
+  const handleWordUpdate = (id: string, word: string, text: string) => {
+    console.log('handleUpdateClear')
+    const newWord = {
+      id: id,
+      word: word,
+      text: text
     }
+    dispatch(updateWord(newWord))
   }
   
   return (
@@ -110,7 +128,7 @@ const Main = () => {
         <div className={$.title_wrap}>
           <Title text='나만의 단어장' />
           <div className={$.btn_wrap}>
-            <Button text={btnTextState} 
+            <Button text={btnTextState} mobileNone
               onClick={btnIconState === 'add' ? handleClickAdd : handleAllChecked}
               fillWhite 
               color={checkedList.length === 0 ? false : checkedList.length === wordList.length ? true : false}
@@ -126,7 +144,9 @@ const Main = () => {
         <WordList isEdit={edit} 
           wordList={wordList}
           onChecked={handleCheckedItem}
-          checkedList={checkedList} />
+          checkedList={checkedList}
+          onDelete={handleClickDelete}
+          onUpdate={handleWordUpdate} />
       </div>
     </Wrapper>
     </>

@@ -19,3 +19,15 @@
     font-weight: 700;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .header {
+    position: static;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4rem;
+    width: 100%;
+    height: auto;
+  }
+}
