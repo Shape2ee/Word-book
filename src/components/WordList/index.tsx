@@ -23,9 +23,7 @@ interface WordListProps {
 }
 
 const WordList = ({ wordList, isEdit, checkedList, onChecked, getWordList  }: WordListProps) => {
-  // const wordList = useAppSelector((state) => state.word.wordList)
   const [isList, setList] = useState<boolean>(false)
-  console.log(wordList)
 
   useEffect(() => {
     if (wordList.length <= 0) {

@@ -21,16 +21,15 @@ const Main = () => {
   const [inputValue, setInputValue] = useState<string>('')
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  // const stateWordList = useAppSelector((state) => state.word.wordList)
 
   const getWordList = () => {
-    console.log('getWordList')
     const sessionWordList = localStorage.getItem('WordList')
     if (sessionWordList !== null) {
-      const wordList = JSON.parse(sessionWordList)
-      dispatch(readWord(wordList))
-      setWordList(wordList)
+      const WORDLIST = JSON.parse(sessionWordList)
+      dispatch(readWord(WORDLIST))
+      setWordList(WORDLIST)
     }
-    console.log('wordList', wordList)
   }
 
   useEffect(()=> {
@@ -68,7 +67,6 @@ const Main = () => {
     if (checkedList.length <= 0) {
       return
     }
-    // console.log('handelClickDelete')
     checkedList.forEach((item) => {
       dispatch(deleteWord(item))
     })

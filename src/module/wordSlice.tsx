@@ -37,8 +37,7 @@ const wordSlice = createSlice({
   name: 'word',
   initialState,
   reducers: {
-    readWord: (state, action) => {
-      console.log(action)
+    readWord: (state, action: PayloadAction<WordListType[]>) => {
       state.wordList = [...action.payload]
     },
     addWord: (state, action) => {
@@ -48,7 +47,6 @@ const wordSlice = createSlice({
         id: maxId + 1 + '',
         word: action.payload.word,
         text: action.payload.text,
-        example: action.payload.example,
         timetamp: Date.now(),
       }
       state.wordList.unshift(newWord)
@@ -59,14 +57,13 @@ const wordSlice = createSlice({
       localStorage.setItem('WordList', JSON.stringify(state.wordList))
     },
     updateWord: (state, action) => {
-      const { id, word, text, example } = action.payload
+      const { id, word, text } = action.payload
       console.log(action)
       const targetIndex = state.wordList.findIndex((item) => item.id === id)
       if (targetIndex < 0) throw '수정할 단어가 없습니다.'
       const newWord = {...state.wordList[targetIndex], 
         word: word, 
         text: text,
-        example: example,
         timetamp: Date.now()
       }
       state.wordList.splice(targetIndex, 1, newWord)

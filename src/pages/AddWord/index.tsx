@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useEffect } from 'react';
+import React, { FormEvent, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from './addWord.module.scss'
 import Title from '@components/Title';
@@ -11,6 +11,8 @@ const AddWord = () => {
   const wordList = useAppSelector((state) => state.word.wordList)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const wordInputRef = useRef<HTMLInputElement>(null)
+  const textInputRef = useRef<HTMLInputElement>(null)
 
   const goBack = () => {
     navigate('../')
@@ -25,10 +27,20 @@ const AddWord = () => {
       return
     }
 
+    const haveWord = wordList.filter((item) => formData.get('word') === item.word)
+
+    if (haveWord.length > 0 
+      && wordInputRef.current !== null
+      && textInputRef.current !== null) {
+      alert('해당 단어는 이미 노트에 있습니다.')
+        wordInputRef.current.value = ''
+        textInputRef.current.value = ''
+      return
+    } 
+
     const addWordData = {
       word: formData.get('word'),
       text: formData.get('wordMeaning'),
-      example: formData.get('wordExample'),
     }
     dispatch(addWord(addWordData))
     navigate('../')
@@ -46,16 +58,14 @@ const AddWord = () => {
         <form onSubmit={handleFormSubmit}>
           <div>
             <input type={'text'} name='word'
+            ref={wordInputRef}
               placeholder='영어 단어를 입력해주세요.'
               />
           </div>
           <div>
             <input type={'text'} name='wordMeaning'
+              ref={textInputRef}
               placeholder='단어의 뜻을 입력해주세요.' />
-          </div>
-          <div>
-            <input type={'text'} name='wordExample'
-              placeholder='예문을 입력해주세요.' />
           </div>
           <div className={$.button_wrap}>
             <div className={$.back_button} onClick={goBack}>취소</div>

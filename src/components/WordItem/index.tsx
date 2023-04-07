@@ -12,7 +12,6 @@ interface WordItem {
   id: string
   word: string
   text: string
-  example: string
   timetamp: number
   isEdit: boolean
   checkedList: string[]
@@ -20,7 +19,7 @@ interface WordItem {
   getWordList: () => void
 }
 
-const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onChecked, getWordList }: WordItem) => {
+const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked, getWordList }: WordItem) => {
   const dispatch = useAppDispatch()
   const [isEditclicked, setEditClicked] = useState<boolean>(false)
   const [isUpdate, setUpdate] = useState<boolean>(false)
@@ -28,11 +27,9 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
   const [input, setInput] = useState<WordType>({
     word: word,
     text: text,
-    example: example
   })
   const wordRef = useRef<HTMLInputElement>(null)
   const textRef = useRef<HTMLInputElement>(null)
-  const exampleRef = useRef<HTMLInputElement>(null)
 
   const handleClickEdit = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation()
@@ -54,13 +51,12 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
   
   const handleUpdateClear = () => {
       console.log('handleUpdateClear')
-    if (wordRef.current && textRef.current && exampleRef.current) {
+    if (wordRef.current && textRef.current) {
       console.log(wordRef.current.value)
       const newWord = {
         id: id,
         word: wordRef.current.value,
         text: textRef.current.value,
-        example: exampleRef.current.value
       }
       dispatch(updateWord(newWord))
     }
@@ -99,14 +95,6 @@ const WordItem = ({ id, word, text, example, timetamp, isEdit, checkedList, onCh
                   onChange={handleInputChange}/>
               : text}
           </p>
-          <em>
-            { isUpdate 
-              ? <input name='example'
-                  value={input.example}
-                  ref={exampleRef}
-                  onChange={handleInputChange}/>
-              : example}
-          </em>
           {
             isUpdate ? (
               <div className={$.clear_button} onClick={handleUpdateClear}>저장</div>
