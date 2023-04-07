@@ -37,9 +37,6 @@ const wordSlice = createSlice({
   name: 'word',
   initialState,
   reducers: {
-    readWord: (state, action: PayloadAction<WordListType[]>) => {
-      state.wordList = [...action.payload]
-    },
     addWord: (state, action) => {
       const arrayId = state.wordList.map((item) => Number(item.id))
       const maxId = arrayId.length === 0 ? 0 : Math.max(...arrayId)
@@ -50,11 +47,9 @@ const wordSlice = createSlice({
         timetamp: Date.now(),
       }
       state.wordList.unshift(newWord)
-      localStorage.setItem('WordList', JSON.stringify(state.wordList))
     },
     deleteWord: (state, action: PayloadAction<string>) => {
       state.wordList = state.wordList.filter((item) => item.id !== action.payload)
-      localStorage.setItem('WordList', JSON.stringify(state.wordList))
     },
     updateWord: (state, action) => {
       const { id, word, text } = action.payload
@@ -67,11 +62,10 @@ const wordSlice = createSlice({
         timetamp: Date.now()
       }
       state.wordList.splice(targetIndex, 1, newWord)
-      localStorage.setItem('WordList', JSON.stringify(state.wordList))
     }
   }
 })
 
-export const { addWord, deleteWord, updateWord, readWord } = wordSlice.actions;
+export const { addWord, deleteWord, updateWord } = wordSlice.actions;
 export const selectWordList = (state: RootState) => state.word.wordList
 export default wordSlice.reducer;
