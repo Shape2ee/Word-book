@@ -78,3 +78,14 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .add_container {
+    margin-top: 10rem;
+    height: auto;
+    .wrap {
+      max-width: none;
+      padding: 0 4rem;
+    }
+  }
+}

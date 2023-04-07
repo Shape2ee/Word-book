@@ -126,7 +126,7 @@ const Main = () => {
     <Wrapper>
       <div className={$.main_contianer}>
         <div className={$.title_wrap}>
-          <Title text='나만의 단어장' />
+          <Title text='단어 노트' />
           <div className={$.btn_wrap}>
             <Button text={btnTextState} mobileNone
               onClick={btnIconState === 'add' ? handleClickAdd : handleAllChecked}

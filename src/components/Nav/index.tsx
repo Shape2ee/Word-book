@@ -5,23 +5,43 @@ import classNames from 'classnames/bind'
 import Icon from '@components/Icon';
 
 const cx = classNames.bind($)
+
+interface NavListType {
+  id: number
+  title: string
+  path: string
+  icon: string
+}
+
+const NavList: NavListType[] = [
+  {
+    id: 1,
+    title: '단어 노트',
+    path: '/',
+    icon: 'note'
+  },
+  {
+    id: 2,
+    title: '단어 시험',
+    path: '/test',
+    icon: 'test'
+  },
+]
 const Nav = () => {
   const location = useLocation()
   return (
     <nav className={$.nav_container}>
       <ul>
-        <li className={`/` === location.pathname ? cx('active') : ''}>
-          <Icon kinds='note' />
-          <Link to={'/'}>
-            단어 노트
-          </Link>
-        </li>
-        <li className={`/test` === location.pathname ? cx('active') : ''}>
-          <Icon kinds='test' />
-          <Link to={'/test'}>
-            단어 시험
-          </Link>
-        </li>
+        {
+          NavList.map((li) => (
+            <li className={li.path === location.pathname ? cx('active') : ''}>
+              <Link to={li.path}>
+                <Icon kinds={li.icon} /> 
+                <span className={$.text}>{li.title}</span>
+              </Link>
+            </li>
+          ))
+        }
       </ul>
     </nav>
   );
