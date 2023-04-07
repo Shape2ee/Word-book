@@ -16,10 +16,9 @@ interface WordItem {
   isEdit: boolean
   checkedList: string[]
   onChecked: (id: string, isChecked: boolean) => void
-  getWordList: () => void
 }
 
-const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked, getWordList }: WordItem) => {
+const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked }: WordItem) => {
   const dispatch = useAppDispatch()
   const [isEditclicked, setEditClicked] = useState<boolean>(false)
   const [isUpdate, setUpdate] = useState<boolean>(false)
@@ -41,7 +40,6 @@ const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked, ge
   const handleClickDelete = () => {
     dispatch(deleteWord(id))
     setEditClicked(!isEditclicked)
-    getWordList()
   }
 
   const handleWordUpdate = () => {
@@ -61,7 +59,6 @@ const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked, ge
       dispatch(updateWord(newWord))
     }
     setUpdate(false)
-    getWordList()
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

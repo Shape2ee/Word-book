@@ -12,7 +12,8 @@ import { WordListType } from '@customTypes/CustumTypes';
 import Wrapper from '@components/Wrapper';
 
 const Main = () => {
-  const [wordList, setWordList] = useState<WordListType[]>([])
+  const wordList = useAppSelector((state) => state.word.wordList)
+  // const [wordList, setWordList] = useState<WordListType[]>([])
   const [checkedList, setCheckedList] = useState<string[]>([])
   const [edit, setEdit] = useState<boolean>(false)
   const [btnIconState, setBtnIconState]= useState<string>('add')
@@ -21,20 +22,6 @@ const Main = () => {
   const [inputValue, setInputValue] = useState<string>('')
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  // const stateWordList = useAppSelector((state) => state.word.wordList)
-
-  const getWordList = () => {
-    const sessionWordList = localStorage.getItem('WordList')
-    if (sessionWordList !== null) {
-      const WORDLIST = JSON.parse(sessionWordList)
-      dispatch(readWord(WORDLIST))
-      setWordList(WORDLIST)
-    }
-  }
-
-  useEffect(()=> {
-    getWordList()
-  }, [])
 
   const handleClickEdit = () => {
     if (!edit) {
@@ -60,18 +47,17 @@ const Main = () => {
     if (wordList.length <= 0) {
       return
     }
-    setCheckedList(wordList.map((item) => item.id))
+    // setCheckedList(wordList.map((item) => item.id))
   }
 
   const handelClickDelete = async () => {
+    console.log('handelClickDelete')
     if (checkedList.length <= 0) {
       return
     }
     checkedList.forEach((item) => {
       dispatch(deleteWord(item))
-    })
-    getWordList()
-    console.log(wordList)
+    })    
   }
     
   const handleCheckedItem = (id: string, isChecked: boolean) => {
@@ -89,7 +75,6 @@ const Main = () => {
     const formData = new FormData(e.currentTarget)
     const search = formData.get('search')
     if (search === '' || search === null) {
-      getWordList()
       return
     }
 
@@ -98,20 +83,19 @@ const Main = () => {
       const searchFilter = JSON.parse(sessionWordList).filter((v: WordListType) => {
         return v.word.toUpperCase() === search.toString().toUpperCase()
       })
-      setWordList(searchFilter)
+      // setWordList(searchFilter)
     }
   }
 
   const handleResetSearch = () => {
     setInputValue('')
-    getWordList()
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
 
     if (e.target.value === '') {
-      getWordList()
+      // return
     }
   }
   
@@ -142,8 +126,7 @@ const Main = () => {
         <WordList isEdit={edit} 
           wordList={wordList}
           onChecked={handleCheckedItem}
-          checkedList={checkedList}
-          getWordList={getWordList} />
+          checkedList={checkedList} />
       </div>
     </Wrapper>
     </>
