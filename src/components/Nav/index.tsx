@@ -34,7 +34,7 @@ const Nav = () => {
       <ul>
         {
           NavList.map((li) => (
-            <li className={li.path === location.pathname ? cx('active') : ''}>
+            <li key={li.id} className={li.path === location.pathname ? cx('active') : ''}>
               <Link to={li.path}>
                 <Icon kinds={li.icon} /> 
                 <span className={$.text}>{li.title}</span>

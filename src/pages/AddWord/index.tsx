@@ -42,6 +42,7 @@ const AddWord = () => {
       word: formData.get('word'),
       text: formData.get('wordMeaning'),
     }
+
     dispatch(addWord(addWordData))
     navigate('../')
   }
