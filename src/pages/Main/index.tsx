@@ -11,7 +11,6 @@ import Search from '@components/Search';
 import { WordListType } from '@customTypes/CustumTypes';
 import Wrapper from '@components/Wrapper';
 import axios from 'axios'
-// import { customFetcher } from '@api/Fetcher'
 
 axios.defaults.baseURL = 'http://localhost:8000'
 
