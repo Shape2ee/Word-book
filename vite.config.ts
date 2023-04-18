@@ -13,6 +13,7 @@ export default defineConfig({
       { find: '@customTypes', replacement: path.resolve(__dirname, 'src/types') },
       { find: '@customModules', replacement: path.resolve(__dirname, 'src/module') },
       { find: '@hooks', replacement: path.resolve(__dirname, 'src/hooks') },
+      { find: '@api', replacement: path.resolve(__dirname, 'src/api') },
     ]
   }
 
