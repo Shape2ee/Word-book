@@ -6,6 +6,7 @@ const WordGame = () => {
   const [testWordList, setTestWordList] = useState<any[]>([])
   const [count, setCount] = useState<number>(0)
   const [score, setScore] = useState<number>(0)
+  const [result, setResult] = useState<string>('')
   const inputRef = useRef<HTMLInputElement>(null)
 
   const randomWord = (): any[] => {
@@ -41,6 +42,9 @@ const WordGame = () => {
     if (testWordList[count].text === anwser) {
       console.log(true)
       setScore((prev) => prev + 1)
+      setResult('정답!')
+    } else {
+      setResult('땡!')
     }
     // console.log(anwser)
     // console.log(testWordList[count].word, testWordList[count].text)
@@ -66,6 +70,7 @@ const WordGame = () => {
         <button>확인</button>
       </form>
       <div>{score}</div>
+      <div>{result}</div>
     </div>
   );
 };

@@ -8,7 +8,7 @@ const Modal = ({text, onCLick}: {text: string, onCLick: (path: string) => void})
       <div className={$.wrapper}>
         <h3>{text}</h3>
         <div className={$.btn_wrap}>
-          <Button text='확인' onClick={() => onCLick('/test/start')} width height6 fillMain />
+          <Button text='확인' onClick={() => onCLick('./start')} width height6 fillMain />
           <Button text='취소' onClick={() => onCLick('./')} width height6 border />
         </div>
       </div>

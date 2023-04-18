@@ -18,6 +18,10 @@ const AddWord = () => {
     navigate('../')
   }
 
+  const goTranslation = () => {
+    navigate('./translation')
+  }
+
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -73,7 +77,7 @@ const AddWord = () => {
             <Button type={'submit'} text='저장' width fillMain />
           </div>
         </form>
-        <Button text='영어 단어 검색해보기' onClick={() => console.log('단어 검색')} width border height6 >
+        <Button text='영어 단어 검색해보기' onClick={goTranslation} width border height6 >
           <Icon kinds='search'/>
         </Button>
       </div>
