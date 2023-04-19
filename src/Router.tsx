@@ -3,6 +3,7 @@ import Main from '@pages/Main'
 import WordTest from '@pages/WordTest'
 import AddWord from '@pages/AddWord'
 import WordGame from '@pages/WordGame'
+import Login from '@pages/Login'
 
 export const RoutePage = [
   {
@@ -24,6 +25,11 @@ export const RoutePage = [
     path: '/test/start',
     element: <WordGame />,
     label: '단어 시험 시작'
+  },
+  {
+    path: '/login',
+    element: <Login />,
+    label: '로그인'
   },
 ]
 

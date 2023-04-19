@@ -10,10 +10,13 @@ import { deleteWord, updateWord } from '@customModules/wordSlice';
 import Search from '@components/Search';
 import { WordListType } from '@customTypes/CustumTypes';
 import Wrapper from '@components/Wrapper';
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://localhost:8000'
 
 const Main = () => {
-  const wordList = useAppSelector((state) => state.word.wordList)
-  // const [wordList, setWordList] = useState<WordListType[]>([...sessionWordList])
+  // const wordList = useAppSelector((state) => state.word.wordList)
+  const [wordList, setWordList] = useState<WordListType[]>([])
   const [checkedList, setCheckedList] = useState<string[]>([])
   const [edit, setEdit] = useState<boolean>(false)
   const [btnIconState, setBtnIconState]= useState<string>('add')
@@ -22,6 +25,16 @@ const Main = () => {
   const [inputValue, setInputValue] = useState<string>('')
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+
+  const getWordList = async () => {
+    const res = await axios.get('/wordList').then((res) => res.data)
+    console.log(res)
+    setWordList(res)
+  }
+
+  useEffect(() => {
+    getWordList()
+  }, [])
 
   const handleClickEdit = () => {
     if (!edit) {

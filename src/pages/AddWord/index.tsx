@@ -6,6 +6,9 @@ import Button from '@components/Button'
 import Icon from '@components/Icon';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import { addWord } from '@customModules/wordSlice';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:8000'
 
 const AddWord = () => {
   const wordList = useAppSelector((state) => state.word.wordList)
@@ -46,8 +49,12 @@ const AddWord = () => {
       word: formData.get('word'),
       text: formData.get('wordMeaning'),
     }
-
-    dispatch(addWord(addWordData))
+    const newWord = axios.post('/wordList', {
+      word: addWordData.word,
+      text: addWordData.text,
+    }).then((res) => res.data)
+    console.log(newWord)
+    // dispatch(addWord(addWordData))
     navigate('../')
   }
 

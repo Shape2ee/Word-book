@@ -23,6 +23,7 @@
       "@customTypes/*": ["src/types/*"],
       "@customModules/*": ["src/module/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@api/*": ["src/api/*"],
     }
   },
   "include": ["src"],
