@@ -120,23 +120,31 @@ const Main = () => {
   const handleClickDelete = async (id: string) => {
     const newWordList = await fetcher(METHOD.DELETE, `/wordlist/:${id}`)
     // console.log(newWordList)
-    setWordList((wordlist) => {
-      const targetIndex = wordlist.findIndex(word => word.id === id + '')
-      if (targetIndex < 0) return wordlist
-      const newWordList = [...wordlist]
+    setWordList((wordList) => {
+      const targetIndex = wordList.findIndex(word => word.id === id + '')
+      if (targetIndex < 0) return wordList
+      const newWordList = [...wordList]
       newWordList.splice(targetIndex, 1)
       return newWordList
     })
   }
   
-  const handleWordUpdate = (id: string, word: string, text: string) => {
+  const handleWordUpdate =  async (id: string, word: string, text: string) => {
     console.log('handleUpdateClear')
-    const newWord = {
-      id: id,
-      word: word,
-      text: text
-    }
-    dispatch(updateWord(newWord))
+    const newWordList = await fetcher(METHOD.PUT, `/wordlist/${id}`, { word, text })
+    setWordList((wordList) => {
+      const targetIndex = wordList.findIndex(word => word.id === id + '')
+      if (targetIndex < 0) return wordList
+      const newWord = {
+        ...wordList[targetIndex],
+        word: word,
+        text: text,
+        timetamp: Date.now()
+      }
+      const newWordList = [...wordList]
+      newWordList.splice(targetIndex, 1, newWord)
+      return newWordList
+    })
   }
   
   return (
