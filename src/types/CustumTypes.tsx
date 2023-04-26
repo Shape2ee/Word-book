@@ -7,3 +7,9 @@ export interface WordListType extends WordType {
   id: string,
   timetamp: number,
 }
+export const enum METHOD {
+  GET = 'get',
+  POST = 'post',
+  PUT = 'put',
+  DELETE = 'delete',
+}
