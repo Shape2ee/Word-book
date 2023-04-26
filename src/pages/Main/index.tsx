@@ -117,8 +117,16 @@ const Main = () => {
     }
   }
 
-  const handleClickDelete = (id: string) => {
-    dispatch(deleteWord(id))
+  const handleClickDelete = async (id: string) => {
+    const newWordList = await fetcher(METHOD.DELETE, `/wordlist/:${id}`)
+    // console.log(newWordList)
+    setWordList((wordlist) => {
+      const targetIndex = wordlist.findIndex(word => word.id === id + '')
+      if (targetIndex < 0) return wordlist
+      const newWordList = [...wordlist]
+      newWordList.splice(targetIndex, 1)
+      return newWordList
+    })
   }
   
   const handleWordUpdate = (id: string, word: string, text: string) => {
