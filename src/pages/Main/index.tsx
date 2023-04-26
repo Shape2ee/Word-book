@@ -10,9 +10,11 @@ import { deleteWord, updateWord } from '@customModules/wordSlice';
 import Search from '@components/Search';
 import { WordListType } from '@customTypes/CustumTypes';
 import Wrapper from '@components/Wrapper';
-import axios from 'axios'
+import { fetcher } from '@api/Fetcher';
+import { METHOD } from '@customTypes/CustumTypes';
+// import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8000'
+// axios.defaults.baseURL = 'http://localhost:8000'
 
 const Main = () => {
   // const wordList = useAppSelector((state) => state.word.wordList)
@@ -27,9 +29,8 @@ const Main = () => {
   const dispatch = useAppDispatch()
 
   const getWordList = async () => {
-    const res = await axios.get('/wordList').then((res) => res.data)
-    console.log(res)
-    setWordList(res)
+    const res  = await fetcher(METHOD.GET, '/wordList')
+    setWordList([...res])
   }
 
   useEffect(() => {
@@ -100,25 +101,25 @@ const Main = () => {
       return v.word.toUpperCase() === search.toString().toUpperCase()
     })
     
-    // setWordList(searchFilter)
+    setWordList(searchFilter)
   }
 
   const handleResetSearch = () => {
     setInputValue('')
+    getWordList()
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
 
-    // if (e.target.value === '') {
-    //   setWordList(sessionWordList)
-    // }
+    if (e.target.value === '') {
+      getWordList()
+    }
   }
 
   const handleClickDelete = (id: string) => {
     dispatch(deleteWord(id))
   }
-
   
   const handleWordUpdate = (id: string, word: string, text: string) => {
     console.log('handleUpdateClear')
