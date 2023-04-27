@@ -10,11 +10,14 @@ import { deleteWord, updateWord } from '@customModules/wordSlice';
 import Search from '@components/Search';
 import { WordListType } from '@customTypes/CustumTypes';
 import Wrapper from '@components/Wrapper';
-import axios from 'axios'
+import { fetcher } from '@api/Fetcher';
+import { METHOD } from '@customTypes/CustumTypes';
+// import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8000'
+// axios.defaults.baseURL = 'http://localhost:8000'
 
 const Main = () => {
+  const userId = useAppSelector((state) => state.user.userId)
   // const wordList = useAppSelector((state) => state.word.wordList)
   const [wordList, setWordList] = useState<WordListType[]>([])
   const [checkedList, setCheckedList] = useState<string[]>([])
@@ -27,9 +30,9 @@ const Main = () => {
   const dispatch = useAppDispatch()
 
   const getWordList = async () => {
-    const res = await axios.get('/wordList').then((res) => res.data)
-    console.log(res)
-    setWordList(res)
+    const res  = await fetcher(METHOD.GET, '/wordList')
+    const userList = res.filter((v: WordListType) => v.userId === userId)
+    setWordList([...userList])
   }
 
   useEffect(() => {
@@ -100,34 +103,51 @@ const Main = () => {
       return v.word.toUpperCase() === search.toString().toUpperCase()
     })
     
-    // setWordList(searchFilter)
+    setWordList(searchFilter)
   }
 
   const handleResetSearch = () => {
     setInputValue('')
+    getWordList()
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
 
-    // if (e.target.value === '') {
-    //   setWordList(sessionWordList)
-    // }
-  }
-
-  const handleClickDelete = (id: string) => {
-    dispatch(deleteWord(id))
-  }
-
-  
-  const handleWordUpdate = (id: string, word: string, text: string) => {
-    console.log('handleUpdateClear')
-    const newWord = {
-      id: id,
-      word: word,
-      text: text
+    if (e.target.value === '') {
+      getWordList()
     }
-    dispatch(updateWord(newWord))
+  }
+
+  const handleClickDelete = async (id: string) => {
+    const newWordList = await fetcher(METHOD.DELETE, `/wordlist/${id}`, { params: { userId }})
+    setWordList((wordList) => {
+      const targetIndex = wordList.findIndex(word => word.id === id + '')
+      if (targetIndex < 0) return wordList
+      if (wordList[targetIndex].userId !== userId) return wordList
+      const newWordList = [...wordList]
+      newWordList.splice(targetIndex, 1)
+      return newWordList
+    })
+  }
+  
+  const handleWordUpdate =  async (id: string, word: string, text: string) => {
+    console.log('handleUpdateClear')
+    const newWordList = await fetcher(METHOD.PUT, `/wordlist/${id}`, { word, text, userId })
+    setWordList((wordList) => {
+      const targetIndex = wordList.findIndex(word => word.id === id + '')
+      if (targetIndex < 0) return wordList
+      if (wordList[targetIndex].userId !== userId) return wordList
+      const newWord = {
+        ...wordList[targetIndex],
+        word: word,
+        text: text,
+        timetamp: Date.now()
+      }
+      const newWordList = [...wordList]
+      newWordList.splice(targetIndex, 1, newWord)
+      return newWordList
+    })
   }
   
   return (

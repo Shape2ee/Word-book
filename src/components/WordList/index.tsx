@@ -6,14 +6,6 @@ import classNames from 'classnames/bind';
 import { WordListType } from '@customTypes/CustumTypes';
 const cx = classNames.bind($)
 
-
-// const getData = async () => {
-//   const response = await fetch('http://localhost:5173/data/mockData.json')
-//     .then((res) => res.json())
-//     .catch((err) => console.log(err))
-//     .then((data) => data)
-//   return response
-// }
 interface WordListProps { 
   wordList: WordListType[],
   isEdit: boolean,
