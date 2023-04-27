@@ -10,6 +10,7 @@ import { fetcher } from '@api/Fetcher';
 import { METHOD } from '@customTypes/CustumTypes';
 
 const AddWord = () => {
+  const userId = useAppSelector((state) => state.user.userId)
   const wordList = useAppSelector((state) => state.word.wordList)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -48,9 +49,11 @@ const AddWord = () => {
       word: formData.get('word'),
       text: formData.get('wordMeaning'),
     }
+    console.log(userId)
     fetcher(METHOD.POST, '/wordList', {
       word: addWordData.word,
       text: addWordData.text,
+      userId,
     })
     navigate('../')
   }

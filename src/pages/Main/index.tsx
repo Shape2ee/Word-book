@@ -17,6 +17,7 @@ import { METHOD } from '@customTypes/CustumTypes';
 // axios.defaults.baseURL = 'http://localhost:8000'
 
 const Main = () => {
+  const userId = useAppSelector((state) => state.user.userId)
   // const wordList = useAppSelector((state) => state.word.wordList)
   const [wordList, setWordList] = useState<WordListType[]>([])
   const [checkedList, setCheckedList] = useState<string[]>([])
@@ -30,7 +31,8 @@ const Main = () => {
 
   const getWordList = async () => {
     const res  = await fetcher(METHOD.GET, '/wordList')
-    setWordList([...res])
+    const userList = res.filter((v: WordListType) => v.userId === userId)
+    setWordList([...userList])
   }
 
   useEffect(() => {
@@ -119,7 +121,6 @@ const Main = () => {
 
   const handleClickDelete = async (id: string) => {
     const newWordList = await fetcher(METHOD.DELETE, `/wordlist/:${id}`)
-    // console.log(newWordList)
     setWordList((wordList) => {
       const targetIndex = wordList.findIndex(word => word.id === id + '')
       if (targetIndex < 0) return wordList
