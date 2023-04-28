@@ -17,7 +17,7 @@ import { METHOD } from '@customTypes/CustumTypes';
 // axios.defaults.baseURL = 'http://localhost:8000'
 
 const Main = () => {
-  const userId = useAppSelector((state) => state.user.userId)
+  // const userId = useAppSelector((state) => state.user.userId)
   // const wordList = useAppSelector((state) => state.word.wordList)
   const [wordList, setWordList] = useState<WordListType[]>([])
   const [checkedList, setCheckedList] = useState<string[]>([])
@@ -31,6 +31,8 @@ const Main = () => {
 
   const getWordList = async () => {
     const res  = await fetcher(METHOD.GET, '/wordList')
+    const userId = sessionStorage.getItem('user')
+    if (userId === undefined) return
     const userList = res.filter((v: WordListType) => v.userId === userId)
     setWordList([...userList])
   }
@@ -120,6 +122,7 @@ const Main = () => {
   }
 
   const handleClickDelete = async (id: string) => {
+    const userId = sessionStorage.getItem('user')
     const newWordList = await fetcher(METHOD.DELETE, `/wordlist/${id}`, { params: { userId }})
     setWordList((wordList) => {
       const targetIndex = wordList.findIndex(word => word.id === id + '')
@@ -133,6 +136,7 @@ const Main = () => {
   
   const handleWordUpdate =  async (id: string, word: string, text: string) => {
     console.log('handleUpdateClear')
+    const userId = sessionStorage.getItem('user')
     const newWordList = await fetcher(METHOD.PUT, `/wordlist/${id}`, { word, text, userId })
     setWordList((wordList) => {
       const targetIndex = wordList.findIndex(word => word.id === id + '')
