@@ -7,19 +7,24 @@ import { setUserId } from '@customModules/usersSlice';
 import { useAppSelector, useAppDispatch } from '@hooks/reduxHooks';
 import { fetcher } from '@api/Fetcher';
 import { METHOD } from '@customTypes/CustumTypes';
+import { useNavigate } from 'react-router-dom';
+
 const Login = () => {
-  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const [usersInfo, setUsersInfo] = useState<any[]>([])
   const [isResult, setResult] = useState<boolean>(false)
   const [isNotIdMatched, setNotIdMatched] = useState<boolean>(false)
   const [isNotPwMatched, setNotPwMatched] = useState<boolean>(false)
+
   const getUsersData = async () => {
     const userDb = await fetcher(METHOD.GET, '/users')
     setUsersInfo([...userDb])
   }
+
   useEffect(() => {
     getUsersData()
   }, [])
+
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -34,7 +39,9 @@ const Login = () => {
       }
       setNotPwMatched(false)
       setResult(true)
-      dispatch(setUserId(usersInfo[i].userId))
+      // dispatch(setUserId(usersInfo[i].userId))
+      sessionStorage.setItem('user', usersInfo[i].userId)
+      navigate('/')
     }
     console.log(formData.get('userId'), formData.get('userPw'))
     console.log(isResult)
@@ -49,9 +56,11 @@ const Login = () => {
               <Icon kinds='user'/>
             </div>
             <input type='text' name='userId' id='id' placeholder='아이디' />
-            <span>
-              <Icon kinds='cancell' />
-            </span>
+            {
+              <span className={$.reset_button}>
+                <Icon kinds='cancell' />
+              </span>
+            }
           </div>
           <div className={$.input_row}>
             <div className={$.icon}>
@@ -60,12 +69,12 @@ const Login = () => {
             <input type='password' name='userPw' id='password' placeholder='비밀번호'
               maxLength={16}
             />
-            <span>
+            <span className={$.reset_button}>
               <Icon kinds='cancell' />
             </span>
             {isNotPwMatched && <div>패스워드가 틀렸습니다.</div>}
           </div>
-          <Button text='확인'/>
+          <Button text='로그인'/>
           <div>
           </div>
         </form>
