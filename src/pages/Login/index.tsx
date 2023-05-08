@@ -106,10 +106,11 @@ const Login = () => {
             }
             {isNotPwMatched && <div>패스워드가 틀렸습니다.</div>}
           </div>
-          <div className={$.showPassword_button}>
+          <div className={$.show_password_button}>
             <label>
               <input type='checkbox' />
-              <span>비밀번호 보기</span>
+              <Icon kinds='checkboxLine'/>
+              <span className={$.show_password_title}>비밀번호 보기</span>
             </label>
           </div>
           <Button text='로그인' width fillMain height6/>

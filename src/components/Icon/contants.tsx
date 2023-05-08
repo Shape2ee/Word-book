@@ -11,7 +11,9 @@ import {
   BsThreeDotsVertical,
   BsX,
   BsPerson,
-  BsLock
+  BsLock,
+  BsCheckSquare,
+  BsCheckSquareFill
 } from "react-icons/bs";
 
 interface IconButtonList {
@@ -71,5 +73,13 @@ export const ICON_BUTTON_LIST: IconButtonList[] = [
   {
     kinds: 'lock',
     element: <BsLock />
+  },
+  {
+    kinds: 'checkboxLine',
+    element: <BsCheckSquare />
+  },
+  {
+    kinds: 'checkboxFill',
+    element: <BsCheckSquareFill />
   },
 ]
