@@ -14,11 +14,12 @@
   .input_row {
     position: relative;
     margin: 2rem 0;
-
+    
     input {
       padding: 1.5rem 1rem;
       width: 100%;
-      text-indent: 2.5rem;
+      height: 6rem;
+      text-indent: 3rem;
     }
 
     .icon {
@@ -28,21 +29,28 @@
       transform: translateY(-50%);
       color: var(--color-gray999);
     }
-
-    .reset_button {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
   }
   
-  .showPassword_button {
+  .show_password_button {
     margin-bottom: 2rem;
     font-size: 1.4rem;
+
+    label {
+      display: flex;
+      align-items: center;
+    }
+
+    input[type=checkbox] {
+      display: none;
+    }
+
+    .show_password_title {
+      margin-left: 1rem;
+    }
   }
 
   .join_button {
+    margin-top: 2rem;
     text-align: right;
   }
 }
