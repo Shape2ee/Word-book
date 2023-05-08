@@ -1,19 +1,16 @@
-import React, { FormEvent, useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from './addWord.module.scss'
 import Title from '@components/Title';
 import Button from '@components/Button'
 import Icon from '@components/Icon';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
-import { addWord } from '@customModules/wordSlice';
 import { fetcher } from '@api/Fetcher';
 import { METHOD } from '@customTypes/CustumTypes';
 
 const AddWord = () => {
-  const userId = useAppSelector((state) => state.user.userId)
   const wordList = useAppSelector((state) => state.word.wordList)
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
   const wordInputRef = useRef<HTMLInputElement>(null)
   const textInputRef = useRef<HTMLInputElement>(null)
 
@@ -27,8 +24,16 @@ const AddWord = () => {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
 
+    const userId = sessionStorage.getItem('userId')
+    if (userId === null) {
+      alert('로그인을 먼저 해주십시오!')
+      navigate('/login')
+      return
+    }
+
+    const formData = new FormData(e.currentTarget)
+    
     if (formData.get('word') === '' 
       || formData.get('wordMeaning') === '') {
       return
@@ -49,7 +54,6 @@ const AddWord = () => {
       word: formData.get('word'),
       text: formData.get('wordMeaning'),
     }
-    console.log(userId)
     fetcher(METHOD.POST, '/wordList', {
       word: addWordData.word,
       text: addWordData.text,
