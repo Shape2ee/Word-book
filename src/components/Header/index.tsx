@@ -35,16 +35,23 @@ const Header = ({ children }: { children: ReactNode }) => {
     setActiveLoginContainer(!activeLoginContainer)
   }
 
+  const handleBlurLoginContainer = () => {
+    setTimeout(() => {
+      setActiveLoginContainer(false)
+    }, 200);
+  }
   return (
     <header className={$.header}>
       <h1>Word Book</h1>
       {children}
-      <div className={cx('login_container', activeLoginContainer ? 'active' : '')}>
-        <div className={$.login} onClick={isLogin ? handleLogOut : goLogin}>{isLogin ? '로그아웃' : '로그인'}</div>
-        <div className={$.join}>회원가입</div>
-      </div>
-      <div className={$.mobile_login_container} onClick={handleOpenLoginContainer}>
-        <Icon kinds='user' />
+      <div onBlur={handleBlurLoginContainer}>
+        <button className={cx('mobile_login_container', activeLoginContainer ? 'active' : '')} onClick={handleOpenLoginContainer}>
+          <Icon kinds='user' />
+        </button>
+        <div className={$.login_container}>
+          <div className={$.login} onClick={isLogin ? handleLogOut : goLogin}>{isLogin ? '로그아웃' : '로그인'}</div>
+          <div className={$.join}>회원가입</div>
+        </div>
       </div>
     </header>
   );
