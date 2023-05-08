@@ -60,6 +60,39 @@ const Main = () => {
     console.log('add')
     navigate('/add')
   }
+  
+  const handleClickDelete = async (id: string) => {
+    const userId = sessionStorage.getItem('user')
+    const newWordList = await fetcher(METHOD.DELETE, `/wordlist/${id}`, { params: { userId }})
+    setWordList((wordList) => {
+      const targetIndex = wordList.findIndex(word => word.id === id + '')
+      if (targetIndex < 0) return wordList
+      if (wordList[targetIndex].userId !== userId) return wordList
+      const newWordList = [...wordList]
+      newWordList.splice(targetIndex, 1)
+      return newWordList
+    })
+  }
+  
+  const handleWordUpdate =  async (id: string, word: string, text: string) => {
+    console.log('handleUpdateClear')
+    const userId = sessionStorage.getItem('user')
+    const newWordList = await fetcher(METHOD.PUT, `/wordlist/${id}`, { word, text, userId })
+    setWordList((wordList) => {
+      const targetIndex = wordList.findIndex(word => word.id === id + '')
+      if (targetIndex < 0) return wordList
+      if (wordList[targetIndex].userId !== userId) return wordList
+      const newWord = {
+        ...wordList[targetIndex],
+        word: word,
+        text: text,
+        timetamp: Date.now()
+      }
+      const newWordList = [...wordList]
+      newWordList.splice(targetIndex, 1, newWord)
+      return newWordList
+    })
+  }
 
   const handleAllChecked = () => {
     if (wordList.length <= 0) {
@@ -78,7 +111,7 @@ const Main = () => {
       return
     }
     checkedList.forEach((item) => {
-      dispatch(deleteWord(item))
+      handleClickDelete(item)
     })
     setCheckedList([])
   }
@@ -121,39 +154,6 @@ const Main = () => {
     }
   }
 
-  const handleClickDelete = async (id: string) => {
-    const userId = sessionStorage.getItem('user')
-    const newWordList = await fetcher(METHOD.DELETE, `/wordlist/${id}`, { params: { userId }})
-    setWordList((wordList) => {
-      const targetIndex = wordList.findIndex(word => word.id === id + '')
-      if (targetIndex < 0) return wordList
-      if (wordList[targetIndex].userId !== userId) return wordList
-      const newWordList = [...wordList]
-      newWordList.splice(targetIndex, 1)
-      return newWordList
-    })
-  }
-  
-  const handleWordUpdate =  async (id: string, word: string, text: string) => {
-    console.log('handleUpdateClear')
-    const userId = sessionStorage.getItem('user')
-    const newWordList = await fetcher(METHOD.PUT, `/wordlist/${id}`, { word, text, userId })
-    setWordList((wordList) => {
-      const targetIndex = wordList.findIndex(word => word.id === id + '')
-      if (targetIndex < 0) return wordList
-      if (wordList[targetIndex].userId !== userId) return wordList
-      const newWord = {
-        ...wordList[targetIndex],
-        word: word,
-        text: text,
-        timetamp: Date.now()
-      }
-      const newWordList = [...wordList]
-      newWordList.splice(targetIndex, 1, newWord)
-      return newWordList
-    })
-  }
-  
   return (
     <>
     <Search value={inputValue} onSubmit={handleFormSubmit} 
