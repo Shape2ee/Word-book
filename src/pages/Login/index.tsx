@@ -3,6 +3,7 @@ import $ from './login.module.scss'
 import Wrapper from '@components/Wrapper';
 import Button from '@components/Button'
 import Icon from '@components/Icon';
+import ResetButton from '@components/ResetButton';
 import { setUserId } from '@customModules/usersSlice';
 import { useAppSelector, useAppDispatch } from '@hooks/reduxHooks';
 import { fetcher } from '@api/Fetcher';
@@ -48,12 +49,14 @@ const Login = () => {
         setUserPwInput('')
         return
       }
+
       if (usersInfo[i].userPw !== formData.get('userPw')) {
         setNotPwMatched(true)
         setUserIdInput('')
         setUserPwInput('')
         return
       }
+      
       setNotPwMatched(false)
       setResult(true)
       sessionStorage.setItem('user', usersInfo[i].userId)
@@ -62,6 +65,16 @@ const Login = () => {
     console.log(userIdInput)
     console.log(formData.get('userId'), formData.get('userPw'))
     console.log(isResult)
+  }
+  
+  const resetInputValue = (e: React.MouseEvent) => {
+    const siblingInput = e.currentTarget.previousElementSibling
+    if (siblingInput === null) return
+    if (siblingInput.id === 'id') {
+      setUserIdInput('')
+    } else {
+      setUserPwInput('')
+    }
   }
 
   return (
@@ -76,11 +89,7 @@ const Login = () => {
               value={userIdInput}
               onChange={handleChangeInput}/>
             {
-              userIdInput && (
-                <span className={$.reset_button}>
-                  <Icon kinds='cancell' />
-                </span>
-              )
+              userIdInput && <ResetButton icon='cancell' onClick={resetInputValue}/>
             }
           </div>
           <div className={$.input_row}>
@@ -93,20 +102,16 @@ const Login = () => {
               onChange={handleChangeInput}
             />
             {
-              userPwInput && (
-                <span className={$.reset_button}>
-                  <Icon kinds='cancell' />
-                </span>
-              )
+              userPwInput && <ResetButton icon='cancell' onClick={resetInputValue}/>
             }
             {isNotPwMatched && <div>패스워드가 틀렸습니다.</div>}
           </div>
-          <div>
-              <label>
-                <input type='checkbox' />
-                <span>비밀번호 보기</span>
-              </label>
-            </div>
+          <div className={$.showPassword_button}>
+            <label>
+              <input type='checkbox' />
+              <span>비밀번호 보기</span>
+            </label>
+          </div>
           <Button text='로그인' width fillMain height6/>
           <div className={$.join_button}>
             <Button text='회원가입' />
