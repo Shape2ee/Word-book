@@ -1,37 +1,40 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '@hooks/reduxHooks';
+import { WordListType } from '@customTypes/CustumTypes';
+import { fetcher } from '@api/Fetcher';
+import { METHOD } from '@customTypes/CustumTypes';
+
 const WordGame = () => {
   const gameNumber = useAppSelector((state) => state.game.number)
-  const wordList = useAppSelector((state) => state.word.wordList)
+  const [wordList, setWordList] = useState<WordListType[]>([])
   const [testWordList, setTestWordList] = useState<any[]>([])
   const [count, setCount] = useState<number>(0)
   const [score, setScore] = useState<number>(0)
   const [result, setResult] = useState<string>('')
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const randomWord = (): any[] => {
-    let copyWordList = [...wordList]
-    // console.log(copyWordList)
+  const getRandomWord = async () => {
+    const res  = await fetcher(METHOD.GET, '/wordList')
+    const userId = sessionStorage.getItem('user')
+    if (userId === undefined) return
+    const userList = res.filter((v: WordListType) => v.userId === userId)
+
+    let copyWordList = await [...userList]
+    console.log(copyWordList)
     const shuffleWordList: any = []
     for(let i = 0; i < gameNumber; i++) {
       if (copyWordList.length === 0) {
-        copyWordList = [...wordList]
+        copyWordList = [...userList]
       }
       const chose = copyWordList.splice(Math.floor(Math.random() * copyWordList.length), 1)[0];
       shuffleWordList.push(chose)
       // console.log(copyWordList)
     }
-    return shuffleWordList
-  }
-
-  const choseWordList = async () => {
-    const testList = await randomWord()
-    setTestWordList([...testList])
-    // console.log(testWordList, wordList)
+    await setTestWordList([...shuffleWordList])
   }
 
   useEffect(() => {
-    choseWordList()
+    getRandomWord()
   }, [])
 
   const handleFormSubmit = (e : React.FormEvent<HTMLFormElement>) => {
@@ -46,8 +49,7 @@ const WordGame = () => {
     } else {
       setResult('땡!')
     }
-    // console.log(anwser)
-    // console.log(testWordList[count].word, testWordList[count].text)
+
     setCount((prev) => prev + 1)
     if (inputRef.current !== null) {
       inputRef.current.value = ''
