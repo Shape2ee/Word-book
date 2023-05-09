@@ -44,8 +44,21 @@
       display: none;
     }
 
+    input[type=checkbox] + svg {
+      color: var(--color-gray999);
+    }
+    
+    input[type=checkbox]:checked + svg {
+      color: var(--color-main);
+    }
+
+    input[type=checkbox]:checked ~ .show_password_title {
+      color: var(--color-main);
+    }
+
     .show_password_title {
       margin-left: 1rem;
+      color: var(--color-gray999);
     }
   }
 

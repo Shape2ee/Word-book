@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import $ from './login.module.scss'
 import Wrapper from '@components/Wrapper';
 import Button from '@components/Button'
@@ -18,7 +18,8 @@ const Login = () => {
   const [userPwInput, setUserPwInput] = useState<string>('')
   const [isNotIdMatched, setNotIdMatched] = useState<boolean>(false)
   const [isNotPwMatched, setNotPwMatched] = useState<boolean>(false)
-
+  const [isShowPwChecked, setShowPwChecked] = useState<boolean>(false)
+  const passwordRef = useRef<HTMLInputElement>(null)
   const getUsersData = async () => {
     const userDb = await fetcher(METHOD.GET, '/users')
     setUsersInfo([...userDb])
@@ -77,6 +78,19 @@ const Login = () => {
     }
   }
 
+  const handleShowPwChecked = async () => {
+    const password = await passwordRef.current
+    if (password === null) return
+
+    await setShowPwChecked(!isShowPwChecked)
+    console.log(isShowPwChecked)
+    if(!isShowPwChecked) {
+      password.type = 'text';
+    } else {
+      password.type = 'password';
+    }
+  }
+
   return (
     <Wrapper>
       <div className={$.login_container}>
@@ -100,6 +114,7 @@ const Login = () => {
               maxLength={16}
               value={userPwInput}
               onChange={handleChangeInput}
+              ref={passwordRef}
             />
             {
               userPwInput && <ResetButton icon='cancell' onClick={resetInputValue}/>
@@ -108,8 +123,8 @@ const Login = () => {
           </div>
           <div className={$.show_password_button}>
             <label>
-              <input type='checkbox' />
-              <Icon kinds='checkboxLine'/>
+              <input type='checkbox' onChange={handleShowPwChecked} />
+              <Icon kinds={isShowPwChecked ? 'checkboxFill' : 'checkboxLine'}/>
               <span className={$.show_password_title}>비밀번호 보기</span>
             </label>
           </div>
