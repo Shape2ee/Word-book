@@ -3,4 +3,37 @@
 .word_test_container {
   width: 100%; 
   height: 100vh;
+
+  .word_test_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .button_wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 400px;
+
+    button {
+      transition: background 0.3s, color 0.3s;
+    }
+    button:hover {
+      background-color: var(--color-main);
+      color: #fff;
+    }
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .word_test_container {
+    height: calc(100vh - 10rem);
+  }
 }
