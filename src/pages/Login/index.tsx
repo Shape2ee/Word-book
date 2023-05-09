@@ -117,8 +117,6 @@ const Login = () => {
           <div className={$.join_button}>
             <Button text='회원가입' />
           </div>
-          <div>
-          </div>
         </form>
       </div>
     </Wrapper>
