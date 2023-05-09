@@ -30,6 +30,16 @@
       transform: translateY(-50%);
       color: var(--color-gray999);
     }
+
+    .password_wrapper {
+      position: relative;
+    }
+    
+    .not_password {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #ff0000;
+    }
   }
 
   .input_row.focus {
@@ -40,9 +50,9 @@
       border: 1px solid var(--color-main);
     }
   }
-  
+
   .show_password_button {
-    margin-bottom: 2rem;
+    margin: 2rem 0;
     font-size: 1.4rem;
 
     label {

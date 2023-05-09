@@ -25,7 +25,6 @@ const Login = () => {
   const [isResult, setResult] = useState<boolean>(false)
   const [userIdInput, setUserIdInput] = useState<string>('')
   const [userPwInput, setUserPwInput] = useState<string>('')
-  // const [isNotIdMatched, setNotIdMatched] = useState<boolean>(false)
   const [isNotPwMatched, setNotPwMatched] = useState<boolean>(false)
   const [isShowPwChecked, setShowPwChecked] = useState<boolean>(false)
   const [isInputFocus, setInputFocus] = useState<inputFocusState>({
@@ -148,19 +147,21 @@ const Login = () => {
           <div className={cx('input_row', passwordFocus ? 'focus' : '' )}
             onFocus={() => handleFocusInput('passwordFocus')}
             onBlur={() => handleBlurInput('passwordFocus')}>
-            <div className={$.icon}>
-              <Icon kinds='lock'/>
+            <div className={$.password_wrapper}>
+              <div className={$.icon}>
+                <Icon kinds='lock'/>
+              </div>
+              <input type='password' name='userPw' id='password' placeholder='비밀번호'
+                maxLength={16}
+                value={userPwInput}
+                onChange={handleChangeInput}
+                ref={passwordRef}
+              />
             </div>
-            <input type='password' name='userPw' id='password' placeholder='비밀번호'
-              maxLength={16}
-              value={userPwInput}
-              onChange={handleChangeInput}
-              ref={passwordRef}
-            />
             {
               userPwInput && <ResetButton icon='cancell' onClick={resetInputValue}/>
             }
-            {isNotPwMatched && <div>패스워드가 틀렸습니다.</div>}
+            {isNotPwMatched && <div className={$.not_password}>비밀번호가 틀렸습니다. 다시 입력해 주세요.</div>}
           </div>
           <div className={$.show_password_button}>
             <label>
