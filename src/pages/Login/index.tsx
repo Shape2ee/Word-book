@@ -9,17 +9,32 @@ import { useAppSelector, useAppDispatch } from '@hooks/reduxHooks';
 import { fetcher } from '@api/Fetcher';
 import { METHOD } from '@customTypes/CustumTypes';
 import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind($)
+
+interface inputFocusState {
+  idFocus: boolean,
+  passwordFocus: boolean,
+}
 
 const Login = () => {
   const navigate = useNavigate()
+  const passwordRef = useRef<HTMLInputElement>(null)
   const [usersInfo, setUsersInfo] = useState<any[]>([])
   const [isResult, setResult] = useState<boolean>(false)
   const [userIdInput, setUserIdInput] = useState<string>('')
   const [userPwInput, setUserPwInput] = useState<string>('')
-  const [isNotIdMatched, setNotIdMatched] = useState<boolean>(false)
+  // const [isNotIdMatched, setNotIdMatched] = useState<boolean>(false)
   const [isNotPwMatched, setNotPwMatched] = useState<boolean>(false)
   const [isShowPwChecked, setShowPwChecked] = useState<boolean>(false)
-  const passwordRef = useRef<HTMLInputElement>(null)
+  const [isInputFocus, setInputFocus] = useState<inputFocusState>({
+    idFocus: false,
+    passwordFocus: false,
+  });
+  
+  const { idFocus, passwordFocus } = isInputFocus;
+
   const getUsersData = async () => {
     const userDb = await fetcher(METHOD.GET, '/users')
     setUsersInfo([...userDb])
@@ -90,12 +105,36 @@ const Login = () => {
       password.type = 'password';
     }
   }
+  
+  const handleFocusInput = (input: string) => {
+    // console.log(isInputFocue[input])
+    console.log(idFocus)
+    setInputFocus((prev) => {
+      return {
+        ...prev,
+        [input]: true,  
+      }
+    });
+  }
+
+  const handleBlurInput = (input: string) => {
+    // console.log(isInputFocue[input])
+    console.log(idFocus)
+    setInputFocus((prev) => {
+      return {
+        ...prev,
+        [input]: false,  
+      }
+    });
+  };
 
   return (
     <Wrapper>
       <div className={$.login_container}>
         <form onSubmit={handleFormSubmit}>
-          <div className={$.input_row}>
+          <div className={cx('input_row', idFocus ? 'focus' : '' )}
+            onFocus={() => handleFocusInput('idFocus')}
+            onBlur={() => handleBlurInput('idFocus')}>
             <div className={$.icon}>
               <Icon kinds='user'/>
             </div>
@@ -106,7 +145,9 @@ const Login = () => {
               userIdInput && <ResetButton icon='cancell' onClick={resetInputValue}/>
             }
           </div>
-          <div className={$.input_row}>
+          <div className={cx('input_row', passwordFocus ? 'focus' : '' )}
+            onFocus={() => handleFocusInput('passwordFocus')}
+            onBlur={() => handleBlurInput('passwordFocus')}>
             <div className={$.icon}>
               <Icon kinds='lock'/>
             </div>

@@ -89,7 +89,7 @@
       height: 0;
       font-size: 1.4rem;
       transition: height 0.3s;
-      z-index: 9999;
+      z-index: 99999;
 
       div {
         width: 100%;
@@ -97,8 +97,6 @@
         text-align: center;
         line-height: 6rem;
       }
-
-      
     }
   }
 }
