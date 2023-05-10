@@ -2,6 +2,7 @@ import React from 'react'
 import $ from './join.module.scss'
 import Wrapper from '@components/Wrapper'
 import Button from '@components/Button'
+import Icon from '@components/Icon'
 
 const Join = () => {
   return (
@@ -24,7 +25,10 @@ const Join = () => {
             </h3>
             <span className={$.input_box}>
               <input type='text' name='password1' id='password1'/>
-              <span>사용불가</span>
+              <span className={$.confirm_box}>
+                <span>사용불가</span>
+                <Icon kinds='shieldX'/>
+              </span>
             </span>
             <span>필수 정보입니다.</span>
             <span>8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</span>
