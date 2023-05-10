@@ -4,9 +4,9 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind($)
 
-const Title = ({ text }: { text: string }) => {
+const Title = ({ text, center }: { text: string, center?: boolean }) => {
   return (
-    <h2 className={cx('title')}>
+    <h2 className={cx('title', { center })}>
       {text}
     </h2>
   );
