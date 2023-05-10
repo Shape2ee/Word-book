@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import $ from './login.module.scss'
 import Wrapper from '@components/Wrapper';
 import Button from '@components/Button'
@@ -9,15 +9,30 @@ import { useAppSelector, useAppDispatch } from '@hooks/reduxHooks';
 import { fetcher } from '@api/Fetcher';
 import { METHOD } from '@customTypes/CustumTypes';
 import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind($)
+
+interface inputFocusState {
+  idFocus: boolean,
+  passwordFocus: boolean,
+}
 
 const Login = () => {
   const navigate = useNavigate()
+  const passwordRef = useRef<HTMLInputElement>(null)
   const [usersInfo, setUsersInfo] = useState<any[]>([])
   const [isResult, setResult] = useState<boolean>(false)
   const [userIdInput, setUserIdInput] = useState<string>('')
   const [userPwInput, setUserPwInput] = useState<string>('')
-  const [isNotIdMatched, setNotIdMatched] = useState<boolean>(false)
   const [isNotPwMatched, setNotPwMatched] = useState<boolean>(false)
+  const [isShowPwChecked, setShowPwChecked] = useState<boolean>(false)
+  const [isInputFocus, setInputFocus] = useState<inputFocusState>({
+    idFocus: false,
+    passwordFocus: false,
+  });
+  
+  const { idFocus, passwordFocus } = isInputFocus;
 
   const getUsersData = async () => {
     const userDb = await fetcher(METHOD.GET, '/users')
@@ -77,11 +92,48 @@ const Login = () => {
     }
   }
 
+  const handleShowPwChecked = async () => {
+    const password = await passwordRef.current
+    if (password === null) return
+
+    await setShowPwChecked(!isShowPwChecked)
+    console.log(isShowPwChecked)
+    if(!isShowPwChecked) {
+      password.type = 'text';
+    } else {
+      password.type = 'password';
+    }
+  }
+  
+  const handleFocusInput = (input: string) => {
+    // console.log(isInputFocue[input])
+    console.log(idFocus)
+    setInputFocus((prev) => {
+      return {
+        ...prev,
+        [input]: true,  
+      }
+    });
+  }
+
+  const handleBlurInput = (input: string) => {
+    // console.log(isInputFocue[input])
+    console.log(idFocus)
+    setInputFocus((prev) => {
+      return {
+        ...prev,
+        [input]: false,  
+      }
+    });
+  };
+
   return (
     <Wrapper>
       <div className={$.login_container}>
         <form onSubmit={handleFormSubmit}>
-          <div className={$.input_row}>
+          <div className={cx('input_row', idFocus ? 'focus' : '' )}
+            onFocus={() => handleFocusInput('idFocus')}
+            onBlur={() => handleBlurInput('idFocus')}>
             <div className={$.icon}>
               <Icon kinds='user'/>
             </div>
@@ -92,32 +144,35 @@ const Login = () => {
               userIdInput && <ResetButton icon='cancell' onClick={resetInputValue}/>
             }
           </div>
-          <div className={$.input_row}>
-            <div className={$.icon}>
-              <Icon kinds='lock'/>
+          <div className={cx('input_row', passwordFocus ? 'focus' : '' )}
+            onFocus={() => handleFocusInput('passwordFocus')}
+            onBlur={() => handleBlurInput('passwordFocus')}>
+            <div className={$.password_wrapper}>
+              <div className={$.icon}>
+                <Icon kinds='lock'/>
+              </div>
+              <input type='password' name='userPw' id='password' placeholder='비밀번호'
+                maxLength={16}
+                value={userPwInput}
+                onChange={handleChangeInput}
+                ref={passwordRef}
+              />
             </div>
-            <input type='password' name='userPw' id='password' placeholder='비밀번호'
-              maxLength={16}
-              value={userPwInput}
-              onChange={handleChangeInput}
-            />
             {
               userPwInput && <ResetButton icon='cancell' onClick={resetInputValue}/>
             }
-            {isNotPwMatched && <div>패스워드가 틀렸습니다.</div>}
+            {isNotPwMatched && <div className={$.not_password}>비밀번호가 틀렸습니다. 다시 입력해 주세요.</div>}
           </div>
           <div className={$.show_password_button}>
             <label>
-              <input type='checkbox' />
-              <Icon kinds='checkboxLine'/>
+              <input type='checkbox' onChange={handleShowPwChecked} />
+              <Icon kinds={isShowPwChecked ? 'checkboxFill' : 'checkboxLine'}/>
               <span className={$.show_password_title}>비밀번호 보기</span>
             </label>
           </div>
           <Button text='로그인' width fillMain height6/>
           <div className={$.join_button}>
             <Button text='회원가입' />
-          </div>
-          <div>
           </div>
         </form>
       </div>

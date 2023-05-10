@@ -44,13 +44,15 @@ const Header = ({ children }: { children: ReactNode }) => {
     <header className={$.header}>
       <h1>Word Book</h1>
       {children}
-      <div onBlur={handleBlurLoginContainer}>
+      <div onBlur={handleBlurLoginContainer} className={isLogin ? $.login : ''}>
         <button className={cx('mobile_login_container', activeLoginContainer ? 'active' : '')} onClick={handleOpenLoginContainer}>
           <Icon kinds='user' />
         </button>
         <div className={$.login_container}>
-          <div className={$.login} onClick={isLogin ? handleLogOut : goLogin}>{isLogin ? '로그아웃' : '로그인'}</div>
-          <div className={$.join}>회원가입</div>
+          <div className={$.login} onClick={isLogin ? handleLogOut : goLogin}>
+            {isLogin ? '로그아웃' : '로그인'}
+          </div>
+          {!isLogin && <div className={$.join}>회원가입</div>}
         </div>
       </div>
     </header>

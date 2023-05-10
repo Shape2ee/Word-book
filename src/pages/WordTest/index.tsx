@@ -6,6 +6,7 @@ import Modal from '@components/Modal';
 import { countNumber } from '@customModules/gameSlice';
 import { useAppDispatch } from '@hooks/reduxHooks';
 import { useNavigate } from 'react-router-dom';
+import Button from '@components/Button'
 
 const WordTest = () => {
   const [isModal,  setModal] = useState<boolean>(false)
@@ -46,12 +47,12 @@ const WordTest = () => {
     <div className={$.word_test_container}>
       {isModal && <Modal text={`${ModalText} 문제의 단어 시험을 보시겠습니까?`} onCLick={handleModalClick}/>}
       <Wrapper>
-        <div>
+        <div className={$.word_test_wrapper}>
           <Title text='단어 시험'/>
-          <div>
-            <button onClick={handleTestNumber}>10문제</button>
-            <button onClick={handleTestNumber}>20문제</button>
-            <button onClick={handleTestNumber}>직접입력</button>
+          <div className={$.button_wrap}>
+            <Button onClick={handleTestNumber} text='10문제' border width  height6 />
+            <Button onClick={handleTestNumber} text='20문제' border width  height6 />
+            <Button onClick={handleTestNumber} text='직접입력' border width  height6 />
           </div>
         </div>
       </Wrapper>

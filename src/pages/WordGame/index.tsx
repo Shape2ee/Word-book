@@ -1,77 +1,121 @@
 import React, { useEffect, useRef, useState } from 'react';
+import $ from './wordGame.module.scss'
+import Title from '@components/Title';
+import Wrapper from '@components/Wrapper';
+import Button from '@components/Button'
 import { useAppSelector } from '@hooks/reduxHooks';
+import { WordListType } from '@customTypes/CustumTypes';
+import { fetcher } from '@api/Fetcher';
+import { METHOD } from '@customTypes/CustumTypes';
+import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames/bind';
+import Icon from '@components/Icon';
+
+const cx = classNames.bind($)
+
 const WordGame = () => {
+  const navigate = useNavigate()
   const gameNumber = useAppSelector((state) => state.game.number)
-  const wordList = useAppSelector((state) => state.word.wordList)
-  const [testWordList, setTestWordList] = useState<any[]>([])
+  const [testWordList, setTestWordList] = useState<WordListType[]>([])
   const [count, setCount] = useState<number>(0)
   const [score, setScore] = useState<number>(0)
-  const [result, setResult] = useState<string>('')
+  // const [result, setResult] = useState<string>('')///
+  const [answerValue, setAnswerValue] = useState<string>('')
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const randomWord = (): any[] => {
-    let copyWordList = [...wordList]
-    // console.log(copyWordList)
+  const getRandomWord = async () => {
+    const res  = await fetcher(METHOD.GET, '/wordList')
+    const userId = sessionStorage.getItem('user')
+    console.log(userId)
+    if (userId === undefined || userId === null) {
+      alert('로그인을 먼저 해주세요!')
+      navigate('/login')
+      return
+    }
+    const userList = res.filter((v: WordListType) => v.userId === userId)
+
+    let copyWordList = await [...userList]
+    console.log(copyWordList)
     const shuffleWordList: any = []
     for(let i = 0; i < gameNumber; i++) {
       if (copyWordList.length === 0) {
-        copyWordList = [...wordList]
+        copyWordList = [...userList]
       }
       const chose = copyWordList.splice(Math.floor(Math.random() * copyWordList.length), 1)[0];
       shuffleWordList.push(chose)
       // console.log(copyWordList)
     }
-    return shuffleWordList
-  }
-
-  const choseWordList = async () => {
-    const testList = await randomWord()
-    setTestWordList([...testList])
-    // console.log(testWordList, wordList)
+    await setTestWordList([...shuffleWordList])
   }
 
   useEffect(() => {
-    choseWordList()
+    getRandomWord()
   }, [])
 
-  const handleFormSubmit = (e : React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitAnswer = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
 
-    const anwser = formData.get('anwser')
-    if (testWordList[count].text === anwser) {
+    const formData = new FormData(e.currentTarget)
+    const answer = formData.get('answer')
+
+    if (testWordList[count].text === answer) {
       console.log(true)
       setScore((prev) => prev + 1)
-      setResult('정답!')
-    } else {
-      setResult('땡!')
     }
-    // console.log(anwser)
-    // console.log(testWordList[count].word, testWordList[count].text)
     setCount((prev) => prev + 1)
-    if (inputRef.current !== null) {
-      inputRef.current.value = ''
-    }
+    setAnswerValue('')
+    // if (inputRef.current !== null) {
+    //   inputRef.current.value = ''
+    // }
 
     if (count === (gameNumber - 1)) {
       alert('게임 끝!!!!!')
+      navigate('../')
       return
     }
   }
+
+  const handleAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAnswerValue(e.target.value)
+  }
+
+  const handleReStartGame = () => {
+    location.reload();
+  }
   
-  
-  console.log(testWordList, wordList)
+  console.log(testWordList)
   return (
-    <div>
-      <div>문제 수: {gameNumber}</div>
-      <h2>{testWordList[count]?.word}</h2>
-      <form onSubmit={handleFormSubmit}>
-        <input name='anwser' ref={inputRef} placeholder='위의 단어의 뜻을 입력하세요.'/>
-        <button>확인</button>
-      </form>
-      <div>{score}</div>
-      <div>{result}</div>
-    </div>
+    <Wrapper>
+      <div className={$.word_game_container}>
+        <div className={$.word_game_wrapper}>
+          <Title text='단어 게임' center/>
+          <div className={$.game_wrap}>
+            <div className={cx('game_number', 'border')}>
+              문제 수: {count} / <span>{gameNumber}</span>
+            </div>
+            <h2 className={$.word_title}>
+              {
+                testWordList[count]?.word.split('').map((word, i) => {
+                  return (
+                    <span key={testWordList[count]?.word + i} className={$.word_item}>{word}</span>  
+                  )
+                })
+              }</h2>
+            <form onSubmit={handleSubmitAnswer} className={$.answer_wrap}>
+              <input name='answer' ref={inputRef} placeholder='위의 단어의 뜻을 입력하세요.' value={answerValue} onChange={handleAnswerChange}/>
+              <Button text='확인' fillMain/>
+            </form>
+            <div className={cx('score', 'border')}>
+              점수: <span>{score}</span>
+            </div>
+          </div>
+        </div>
+        <div className={$.reset_button} onClick={handleReStartGame}>
+          <Icon kinds='reset'/>
+          <Button text='리셋' />
+        </div>
+      </div>
+    </Wrapper>
   );
 };
 

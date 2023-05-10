@@ -32,7 +32,7 @@ const Main = () => {
   const getWordList = async () => {
     const res  = await fetcher(METHOD.GET, '/wordList')
     const userId = sessionStorage.getItem('user')
-    if (userId === undefined) return
+    if (userId === undefined || userId === null) return
     const userList = res.filter((v: WordListType) => v.userId === userId)
     setWordList([...userList])
   }

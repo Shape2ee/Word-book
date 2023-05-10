@@ -42,6 +42,10 @@
 
     div {
       cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
@@ -72,7 +76,14 @@
         height: 12rem;  
       }
     }
-
+    
+    .login {
+      .mobile_login_container {
+        &.active + .login_container {
+          height: 6rem;  
+        }
+      }
+    }
 
     .login_container {
       overflow: hidden;
@@ -85,7 +96,7 @@
       height: 0;
       font-size: 1.4rem;
       transition: height 0.3s;
-      z-index: 9999;
+      z-index: 99999;
 
       div {
         width: 100%;

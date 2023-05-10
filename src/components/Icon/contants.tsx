@@ -13,7 +13,8 @@ import {
   BsPerson,
   BsLock,
   BsCheckSquare,
-  BsCheckSquareFill
+  BsCheckSquareFill,
+  BsArrowClockwise
 } from "react-icons/bs";
 
 interface IconButtonList {
@@ -81,5 +82,9 @@ export const ICON_BUTTON_LIST: IconButtonList[] = [
   {
     kinds: 'checkboxFill',
     element: <BsCheckSquareFill />
+  },
+  {
+    kinds: 'reset',
+    element: <BsArrowClockwise />
   },
 ]
