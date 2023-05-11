@@ -165,7 +165,7 @@ const Main = () => {
         <div className={$.title_wrap}>
           <Title text='단어 노트' />
           <div className={$.btn_wrap}>
-            <Button text={btnTextState} mobileNone
+            <Button text={btnTextState} mobileNone IconMargin0
               onClick={btnIconState === 'add' ? handleClickAdd : handleAllChecked}
               fillWhite 
               color={checkedList.length === 0 ? false : checkedList.length === wordList.length ? true : false}

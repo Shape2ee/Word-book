@@ -4,6 +4,7 @@ import WordTest from '@pages/WordTest'
 import AddWord from '@pages/AddWord'
 import WordGame from '@pages/WordGame'
 import Login from '@pages/Login'
+import Join from '@pages/Join'
 
 export const RoutePage = [
   {
@@ -30,6 +31,11 @@ export const RoutePage = [
     path: '/login',
     element: <Login />,
     label: '로그인'
+  },
+  {
+    path: '/join',
+    element: <Join />,
+    label: '회원가입'
   },
 ]
 

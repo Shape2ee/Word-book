@@ -16,6 +16,10 @@ const Header = ({ children }: { children: ReactNode }) => {
     navigate('/login')
   }
 
+  const goJoin = () => {
+    navigate('/join')
+  }
+
   const checkUserId = async () => {
     if (user === null) return
     setLogin(true)
@@ -52,7 +56,7 @@ const Header = ({ children }: { children: ReactNode }) => {
           <div className={$.login} onClick={isLogin ? handleLogOut : goLogin}>
             {isLogin ? '로그아웃' : '로그인'}
           </div>
-          {!isLogin && <div className={$.join}>회원가입</div>}
+          {!isLogin && <div className={$.join} onClick={goJoin}>회원가입</div>}
         </div>
       </div>
     </header>

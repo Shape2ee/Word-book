@@ -14,7 +14,11 @@ import {
   BsLock,
   BsCheckSquare,
   BsCheckSquareFill,
-  BsArrowClockwise
+  BsArrowClockwise,
+  BsShieldFillCheck,
+  BsShieldFillX,
+  BsShieldCheck,
+  BsShieldLock,
 } from "react-icons/bs";
 
 interface IconButtonList {
@@ -86,5 +90,21 @@ export const ICON_BUTTON_LIST: IconButtonList[] = [
   {
     kinds: 'reset',
     element: <BsArrowClockwise />
+  },
+  {
+    kinds: 'shieldFillCheck',
+    element: <BsShieldFillCheck />
+  },
+  {
+    kinds: 'shieldFillX',
+    element: <BsShieldFillX />
+  },
+  {
+    kinds: 'shieldCheck',
+    element: <BsShieldCheck />
+  },
+  {
+    kinds: 'shieldLock',
+    element: <BsShieldLock />
   },
 ]
