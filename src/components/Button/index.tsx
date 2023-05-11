@@ -15,7 +15,8 @@ interface ButtonProps {
   border?: boolean
   height6?: boolean
   color?: boolean
-  mobileNone?:boolean
+  mobileNone?: boolean,
+  IconMargin0?: boolean,
 }
 
 const cx = classNames.bind($)
@@ -31,7 +32,8 @@ const IconButton = ({
   border,
   height6,
   color,
-  mobileNone
+  mobileNone,
+  IconMargin0
 }: ButtonProps) => {
   return (
     <button type={type} className={cx('btn', { 
@@ -42,10 +44,11 @@ const IconButton = ({
       border,
       height6,
       color,
-      mobileNone
+      mobileNone,
+      IconMargin0
     })} onClick={onClick}>
       {children}
-      <span className={cx('text', { mobileNone })}>{text}</span>
+      {text && <span className={cx('text', { mobileNone })}>{text}</span>}
     </button>
   );
 };
