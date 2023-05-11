@@ -37,14 +37,17 @@
     height: 6rem;
     background-color: var(--color-white);
     border: 1px solid transparent;
-    cursor: pointer;
+    cursor: text;
 
     input {
       width: 100%;
       font-size: 1.4rem;
-      cursor: pointer;
+      cursor: text;
     }
 
+    &.input_id {
+      padding: 1rem 1.5rem;
+    }
     &.focus {
       border-color: var(--color-main);
     }
@@ -58,10 +61,18 @@
     right: 1.5rem;
     transform: translateY(-50%);
     font-size: 1.2rem;
-    color: #ff0000;
+    color: var(--color-gray999);
     
     span {
       margin-right: 0.5rem;
+    }
+
+    &.error {
+      color: #ff0000;
+    }
+
+    &.success {
+      color: var(--color-main);
     }
   }
 }
