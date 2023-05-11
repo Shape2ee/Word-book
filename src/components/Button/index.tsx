@@ -7,7 +7,7 @@ interface ButtonProps {
   children?: JSX.Element
   type?: "button" | "submit" | "reset" | undefined
   text?: string
-  onClick?: (e?: any) => void
+  onClick?: (e?: any | string) => void
   cercle?: boolean
   fillWhite?: boolean
   width?: boolean
@@ -17,6 +17,7 @@ interface ButtonProps {
   color?: boolean
   mobileNone?: boolean,
   IconMargin0?: boolean,
+  marginTop?: boolean
 }
 
 const cx = classNames.bind($)
@@ -33,7 +34,8 @@ const IconButton = ({
   height6,
   color,
   mobileNone,
-  IconMargin0
+  IconMargin0,
+  marginTop
 }: ButtonProps) => {
   return (
     <button type={type} className={cx('btn', { 
@@ -45,7 +47,8 @@ const IconButton = ({
       height6,
       color,
       mobileNone,
-      IconMargin0
+      IconMargin0,
+      marginTop
     })} onClick={onClick}>
       {children}
       {text && <span className={cx('text', { mobileNone })}>{text}</span>}

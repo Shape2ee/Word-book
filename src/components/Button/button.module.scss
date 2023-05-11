@@ -41,6 +41,9 @@
       margin: 0;
     }
   }
+  &.marginTop {
+    margin-top: 3rem;
+  }
 }
 
 @media screen and (max-width: 768px) {
