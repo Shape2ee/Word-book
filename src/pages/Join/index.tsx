@@ -4,27 +4,9 @@ import Wrapper from '@components/Wrapper'
 import Button from '@components/Button'
 import Icon from '@components/Icon'
 import classNames from 'classnames/bind'
+import { JoinInputs, JoinInputsFocus, PasswordCheck } from '@customTypes/CustumTypes'
 
 const cx = classNames.bind($)
-
-interface JoinInputs {
-  joinId: string,
-  joinPw1: string,
-  joinPw2: string
-}
-
-interface JoinInputsFocus {
-  joinIdFocus: boolean,
-  joinPw1Focus: boolean,
-  joinPw2Focus: boolean
-}
-
-interface PasswordCheck {
-  isPw1NoneValue: boolean,
-  isPw2NoneValue: boolean,
-  isPw1Error: boolean,
-  isPw2Error: boolean
-}
 
 const Join = () => {
   const joinIdRef = useRef<HTMLInputElement>(null)
@@ -84,7 +66,7 @@ const Join = () => {
     setIdError(false)
   }
 
-  const handleCheckPassword1 = async () => {
+  const handleCheckPassword = async () => {
     if (joinPw1 === '') {
       setPasswordCheck((prev) => ({
         ...prev,
@@ -110,7 +92,7 @@ const Join = () => {
     
     const regex = /^[a-zA-Z\d`~!@#$%^&*()-_=+]$/
     const checkPassword = await regex.test(joinPw1)
-    
+
     if (checkPassword) {
       setPasswordCheck((prev) => ({
         ...prev,
@@ -125,6 +107,34 @@ const Join = () => {
     }))    
     setPasswordSuccedd(true)
   }
+  
+  const handleSamePassword = () => {
+    if (joinPw2 === '') {
+      setPasswordCheck((prev) => ({
+        ...prev,
+        isPw2Error: false,
+        isPw2NoneValue: true
+      }))
+      return
+    }
+    setPasswordCheck((prev) => ({
+      ...prev,
+      isPw2NoneValue: false
+    }))
+
+    if (joinPw1 !== joinPw2) {
+      setPasswordCheck((prev) => ({
+        ...prev,
+        isPw2Error: true,
+      }))
+      return
+    }
+    setPasswordCheck((prev) => ({
+      ...prev,
+      isPw2Error: false,
+    }))
+  }
+
 
   const handleJoinSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -161,7 +171,10 @@ const Join = () => {
     if (input === 'joinIdFocus') {
       handleCheckId()
     } else if (input === 'joinPw1Focus'){
-      handleCheckPassword1()
+      handleCheckPassword()
+      handleSamePassword()
+    } else {
+      handleSamePassword()
     }
   }
 
@@ -212,9 +225,12 @@ const Join = () => {
               <input type='text' name='joinPw2' id='joinPw2'
                 ref={joinPw2Ref}
                 value={joinPw2} onChange={handleJoinInputChange}/>
-              <span>확인</span>
+              <span className={cx('confirm_box', isPw2Error ? 'error' : isPw2NoneValue ? '' : 'success')}>
+                <Icon kinds={isPw2NoneValue ? 'shieldCheck' : isPw2Error ? 'shieldCheck' : 'shieldFillCheck'}/>
+              </span>
             </span>
-            <span className={$.error_title}>비밀번호가 일치하지 않습니다.</span>
+            {isPw2NoneValue && <span className={$.error_title}>필수 정보입니다.</span>}
+            {isPw2Error && <span className={$.error_title}>비밀번호가 일치하지 않습니다.</span>}
           </div>
           <Button text='가입하기' width fillMain height6 marginTop />
         </form>
