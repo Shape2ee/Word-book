@@ -33,7 +33,8 @@ const Join = () => {
     isPw2Error: false
   })
   const { isPw1NoneValue, isPw2NoneValue, isPw1Error, isPw2Error } = isPasswordCheck
-  const [isPasswordSuccess, setPasswordSuccedd] = useState<boolean>(false)
+  const [isPassword1Success, setPassword1Succedd] = useState<boolean>(false)
+  const [isPassword2Success, setPassword2Succedd] = useState<boolean>(false)
   
   const handleJoinInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.name)
@@ -73,7 +74,7 @@ const Join = () => {
         isPw1Error: false,
         isPw1NoneValue: true
       }))
-      setPasswordSuccedd(false)
+      setPassword1Succedd(false)
       return 
     }
     setPasswordCheck((prev) => ({
@@ -86,7 +87,7 @@ const Join = () => {
         ...prev,
         isPw1Error: true,
       }))
-      setPasswordSuccedd(false)
+      setPassword1Succedd(false)
       return
     }
     
@@ -98,14 +99,14 @@ const Join = () => {
         ...prev,
         isPw1Error: true,
       }))
-      setPasswordSuccedd(false)
+      setPassword1Succedd(false)
       return
     }
+    setPassword1Succedd(true)
     setPasswordCheck((prev) => ({
       ...prev,
       isPw1Error: false,
     }))    
-    setPasswordSuccedd(true)
   }
   
   const handleSamePassword = () => {
@@ -115,6 +116,7 @@ const Join = () => {
         isPw2Error: false,
         isPw2NoneValue: true
       }))
+      setPassword2Succedd(false)
       return
     }
     setPasswordCheck((prev) => ({
@@ -127,18 +129,23 @@ const Join = () => {
         ...prev,
         isPw2Error: true,
       }))
+      setPassword2Succedd(false)
       return
     }
     setPasswordCheck((prev) => ({
       ...prev,
       isPw2Error: false,
     }))
+    setPassword2Succedd(true)
   }
 
 
   const handleJoinSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    // console.log(!isIdNoneValue, !isIdError, !isPasswordSuccess, !isPw2NoneValue, !isPw2Error)
+    if (!isIdNoneValue || !isIdError || !isPw1NoneValue || !isPw1Error || !isPw2NoneValue || !isPw2Error) return
     console.log(joinInputs)
+
   }
   
   const inputFocusCheck = (input:string, input1: string, input2: string) => {
@@ -178,6 +185,9 @@ const Join = () => {
     }
   }
 
+  // useEffect(() => {
+  //   handleSamePassword()
+  // }, [])
   return (
     <Wrapper>
       <div className={$.join_container}>
@@ -206,9 +216,9 @@ const Join = () => {
               <input type='text' name='joinPw1' id='joinPw1'
                 ref={joinPw1Ref}
                 value={joinPw1} onChange={handleJoinInputChange}/>
-              <span className={cx('confirm_box', isPw1Error ? 'error' : isPasswordSuccess ? 'success' : '')}>
+              <span className={cx('confirm_box', isPw1Error ? 'error' : isPassword1Success ? 'success' : '')}>
                 {isPw1Error && <span>사용불가</span>}
-                {isPasswordSuccess && <span>사용가능</span>}
+                {isPassword1Success && <span>사용가능</span>}
                 <Icon kinds={isPw1Error ? 'shieldFillX': 'shieldLock'}/>
               </span>
             </span>
@@ -225,8 +235,8 @@ const Join = () => {
               <input type='text' name='joinPw2' id='joinPw2'
                 ref={joinPw2Ref}
                 value={joinPw2} onChange={handleJoinInputChange}/>
-              <span className={cx('confirm_box', isPw2Error ? 'error' : isPw2NoneValue ? '' : 'success')}>
-                <Icon kinds={isPw2NoneValue ? 'shieldCheck' : isPw2Error ? 'shieldCheck' : 'shieldFillCheck'}/>
+              <span className={cx('confirm_box', isPw2Error ? 'error' : isPassword2Success ? 'success' : '')}>
+                <Icon kinds={isPw2NoneValue ? 'shieldCheck' : isPassword2Success ? 'shieldFillCheck' : 'shieldCheck'}/>
               </span>
             </span>
             {isPw2NoneValue && <span className={$.error_title}>필수 정보입니다.</span>}
