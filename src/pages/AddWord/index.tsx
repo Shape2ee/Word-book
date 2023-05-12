@@ -4,14 +4,16 @@ import $ from './addWord.module.scss'
 import Title from '@components/Title';
 import Button from '@components/Button'
 import Icon from '@components/Icon';
+import Loading from '@pages/Loading';
 import { WordListType } from '@customTypes/CustumTypes';
-import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
+// import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import { fetcher } from '@api/Fetcher';
 import { METHOD } from '@customTypes/CustumTypes';
 
 const AddWord = () => {
   // const wordList = useAppSelector((state) => state.word.wordList)
   const [wordLIst, setWordList] = useState<WordListType[]>([])
+  const [isLoading, setLoading] = useState<boolean>(false)
   const navigate = useNavigate()
   const wordInputRef = useRef<HTMLInputElement>(null)
   const textInputRef = useRef<HTMLInputElement>(null)
@@ -75,40 +77,48 @@ const AddWord = () => {
       text: addWordData.text,
       userId,
     })
-    navigate('../')
+    setLoading(true)
+    // navigate('../')
   }
 
   return (
-    <div className={$.add_container}>
-      <div className={$.wrap}>
-        <div className={$.title_wrap}>
-          <Title text='단어 추가하기'/>
-          <Button onClick={goBack}>
-            <Icon kinds='back'/>
-          </Button>
+    <>
+    {isLoading ? (
+        <Loading go='/' />
+      ) : (
+        <div className={$.add_container}>
+          <div className={$.wrap}>
+            <div className={$.title_wrap}>
+              <Title text='단어 추가하기'/>
+              <Button onClick={goBack}>
+                <Icon kinds='back'/>
+              </Button>
+            </div>
+            <form onSubmit={handleFormSubmit}>
+              <div>
+                <input type={'text'} name='word'
+                ref={wordInputRef}
+                  placeholder='영어 단어를 입력해주세요.'
+                  />
+              </div>
+              <div>
+                <input type={'text'} name='wordMeaning'
+                  ref={textInputRef}
+                  placeholder='단어의 뜻을 입력해주세요.' />
+              </div>
+              <div className={$.button_wrap}>
+                <div className={$.back_button} onClick={goBack}>취소</div>
+                <Button type={'submit'} text='저장' width fillMain />
+              </div>
+            </form>
+            <Button text='영어 단어 검색해보기' onClick={goTranslation} width border height6 >
+              <Icon kinds='search'/>
+            </Button>
+          </div>
         </div>
-        <form onSubmit={handleFormSubmit}>
-          <div>
-            <input type={'text'} name='word'
-            ref={wordInputRef}
-              placeholder='영어 단어를 입력해주세요.'
-              />
-          </div>
-          <div>
-            <input type={'text'} name='wordMeaning'
-              ref={textInputRef}
-              placeholder='단어의 뜻을 입력해주세요.' />
-          </div>
-          <div className={$.button_wrap}>
-            <div className={$.back_button} onClick={goBack}>취소</div>
-            <Button type={'submit'} text='저장' width fillMain />
-          </div>
-        </form>
-        <Button text='영어 단어 검색해보기' onClick={goTranslation} width border height6 >
-          <Icon kinds='search'/>
-        </Button>
-      </div>
-    </div>
+      )
+    }
+    </>
   );
 };
 

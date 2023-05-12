@@ -24,7 +24,6 @@ const Main = () => {
   const [btnModeState, setBtnModeState] = useState<string>('편집')
   const [inputValue, setInputValue] = useState<string>('')
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
 
   const getWordList = async () => {
     const res  = await fetcher(METHOD.GET, '/wordList')
