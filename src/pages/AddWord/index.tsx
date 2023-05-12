@@ -77,14 +77,13 @@ const AddWord = () => {
     if (word === null) return 
     const checkAddWord = regex.test(word.toString())
     if (checkAddWord) return
-    
+
     fetcher(METHOD.POST, '/wordList', {
-      word: addWordData.word,
-      text: addWordData.text,
+      word: word,
+      text: text,
       userId,
     })
     setLoading(true)
-    // navigate('../')
   }
 
   return (
