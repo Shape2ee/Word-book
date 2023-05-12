@@ -12,6 +12,10 @@ const Header = ({ children }: { children: ReactNode }) => {
   const [activeLoginContainer, setActiveLoginContainer] = useState<boolean>(false)
   const navigate = useNavigate()
 
+  const goMain = () => {
+    navigate('/')
+  }
+  
   const goLogin = () => {
     navigate('/login')
   }
@@ -46,7 +50,7 @@ const Header = ({ children }: { children: ReactNode }) => {
   }
   return (
     <header className={$.header}>
-      <h1>Word Book</h1>
+      <h1 onClick={goMain}>Word Book</h1>
       {children}
       <div onBlur={handleBlurLoginContainer} className={isLogin ? $.login : ''}>
         <button className={cx('mobile_login_container', activeLoginContainer ? 'active' : '')} onClick={handleOpenLoginContainer}>

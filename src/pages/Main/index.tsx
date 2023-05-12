@@ -14,8 +14,6 @@ import { fetcher } from '@api/Fetcher';
 import { METHOD } from '@customTypes/CustumTypes';
 
 const Main = () => {
-  // const userId = useAppSelector((state) => state.user.userId)
-  // const wordList = useAppSelector((state) => state.word.wordList)
   const [wordList, setWordList] = useState<WordListType[]>([])
   const [checkedList, setCheckedList] = useState<string[]>([])
   const [edit, setEdit] = useState<boolean>(false)
@@ -30,9 +28,7 @@ const Main = () => {
     const userId = sessionStorage.getItem('user')
     if (userId === undefined || userId === null) return
     const userList = await res.filter((v: WordListType) => v.userId === userId)
-    console.log(res, userList)
     setWordList([...userList])
-    console.log(userList)
   }
 
   useEffect(() => {
