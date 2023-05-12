@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import wordSlice from '@customModules/wordSlice'
+// import wordSlice from '@customModules/wordSlice'
 import gameSlice from '@customModules/gameSlice'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
@@ -11,7 +11,7 @@ const persistConfig = {
 }
 
 const reducers = combineReducers({
-  word: wordSlice,
+  // word: wordSlice,
   game: gameSlice,
 })
 
