@@ -30,8 +30,10 @@ const Main = () => {
     const res  = await fetcher(METHOD.GET, '/wordList')
     const userId = sessionStorage.getItem('user')
     if (userId === undefined || userId === null) return
-    const userList = res.filter((v: WordListType) => v.userId === userId)
+    const userList = await res.filter((v: WordListType) => v.userId === userId)
+    console.log(res, userList)
     setWordList([...userList])
+    console.log(userList)
   }
 
   useEffect(() => {
