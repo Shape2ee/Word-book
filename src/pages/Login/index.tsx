@@ -22,7 +22,6 @@ const Login = () => {
   const navigate = useNavigate()
   const passwordRef = useRef<HTMLInputElement>(null)
   const [usersInfo, setUsersInfo] = useState<any[]>([])
-  // const [isResult, setResult] = useState<boolean>(false)
   const [userIdInput, setUserIdInput] = useState<string>('')
   const [userPwInput, setUserPwInput] = useState<string>('')
   const [isNotPwMatched, setNotPwMatched] = useState<boolean>(false)
@@ -31,7 +30,6 @@ const Login = () => {
     idFocus: false,
     passwordFocus: false,
   });
-  
   const { idFocus, passwordFocus } = isInputFocus;
 
   const getUsersData = async () => {
@@ -53,19 +51,17 @@ const Login = () => {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(usersInfo)
     if (userIdInput === '' || userPwInput === '') return
     const userIdList = await usersInfo.map((item) => item.userId)
-    console.log(userIdList)
     if (!userIdList.includes(userIdInput)) {
       alert('아이디가 존재하지 않습니다!')
       setUserIdInput('')
       setUserPwInput('')
       return
     }
+
     const IdIndex = await userIdList.indexOf(userIdInput)
     if (IdIndex < 0) return
-
     if (usersInfo[IdIndex].userPw !== userPwInput) {
       setNotPwMatched(true)
       setUserIdInput('')
@@ -73,11 +69,8 @@ const Login = () => {
       return
     }
     await setNotPwMatched(false)
-    sessionStorage.setItem('user', userIdInput)
+    sessionStorage.setItem('user', usersInfo[IdIndex].userId)
     navigate('/')
-    // console.log(userIdInput)
-    // console.log(formData.get('userId'), formData.get('userPw'))
-    // console.log(isResult)
   }
   
   const resetInputValue = (e: React.MouseEvent) => {
@@ -104,8 +97,6 @@ const Login = () => {
   }
   
   const handleFocusInput = (input: string) => {
-    // console.log(isInputFocue[input])
-    // console.log(idFocus)
     setInputFocus((prev) => {
       return {
         ...prev,
@@ -115,8 +106,6 @@ const Login = () => {
   }
 
   const handleBlurInput = (input: string) => {
-    // console.log(isInputFocue[input])
-    // console.log(idFocus)
     setInputFocus((prev) => {
       return {
         ...prev,
@@ -163,7 +152,7 @@ const Login = () => {
             {
               userPwInput && <ResetButton icon='cancell' onClick={resetInputValue}/>
             }
-            {isNotPwMatched && <div className={$.not_password}>비밀번호가 틀렸습니다. 다시 입력해 주세요.</div>}
+            {isNotPwMatched && <span className={$.not_password}>비밀번호가 틀렸습니다. 다시 입력해 주세요.</span>}
           </div>
           <div className={$.show_password_button}>
             <label>
