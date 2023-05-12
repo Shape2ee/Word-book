@@ -75,7 +75,6 @@ const AddWord = () => {
       text: addWordData.text,
       userId,
     })
-    location.reload();
     navigate('../')
   }
 
