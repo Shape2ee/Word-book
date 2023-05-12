@@ -41,7 +41,7 @@ const AddWord = () => {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const userId = sessionStorage.getItem('userId')
+    const userId = sessionStorage.getItem('user')
     if (userId === null) {
       alert('로그인을 먼저 해주십시오!')
       navigate('/login')
