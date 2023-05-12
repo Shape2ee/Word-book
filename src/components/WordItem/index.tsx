@@ -3,8 +3,8 @@ import $ from './wordItem.module.scss'
 import classNames from 'classnames/bind';
 import Checkbox from '@components/Checkbox';
 import Icon from '@components/Icon';
-import { useAppDispatch } from '@hooks/reduxHooks';
-import { deleteWord, updateWord } from '@customModules/wordSlice';
+// import { useAppDispatch } from '@hooks/reduxHooks';
+// import { deleteWord, updateWord } from '@customModules/wordSlice';
 import { WordType } from '@customTypes/CustumTypes';
 const cx = classNames.bind($)
 
@@ -21,7 +21,7 @@ interface WordItem {
 }
 
 const WordItem = ({ id, word, text, timetamp, isEdit, checkedList, onChecked, onDelete, onUpdate }: WordItem) => {
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
   const [isEditclicked, setEditClicked] = useState<boolean>(false)
   const [isUpdate, setUpdate] = useState<boolean>(false)
   const editButtonRef = useRef(null)

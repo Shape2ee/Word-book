@@ -4,7 +4,7 @@ import Wrapper from '@components/Wrapper';
 import Button from '@components/Button'
 import Icon from '@components/Icon';
 import ResetButton from '@components/ResetButton';
-import { setUserId } from '@customModules/usersSlice';
+// import { setUserId } from '@customModules/usersSlice';
 import { useAppSelector, useAppDispatch } from '@hooks/reduxHooks';
 import { fetcher } from '@api/Fetcher';
 import { METHOD } from '@customTypes/CustumTypes';

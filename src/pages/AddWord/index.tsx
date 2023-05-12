@@ -1,15 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from './addWord.module.scss'
 import Title from '@components/Title';
 import Button from '@components/Button'
 import Icon from '@components/Icon';
+import { WordListType } from '@customTypes/CustumTypes';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import { fetcher } from '@api/Fetcher';
 import { METHOD } from '@customTypes/CustumTypes';
 
 const AddWord = () => {
-  const wordList = useAppSelector((state) => state.word.wordList)
+  // const wordList = useAppSelector((state) => state.word.wordList)
+  const [wordLIst, setWordList] = useState<WordListType[]>([])
   const navigate = useNavigate()
   const wordInputRef = useRef<HTMLInputElement>(null)
   const textInputRef = useRef<HTMLInputElement>(null)
@@ -21,6 +23,20 @@ const AddWord = () => {
   const goTranslation = () => {
     navigate('./translation')
   }
+
+  
+  const getWordList = async () => {
+    const res  = await fetcher(METHOD.GET, '/wordList')
+    const userId = sessionStorage.getItem('user')
+    if (userId === undefined || userId === null) return
+    const userList = res.filter((v: WordListType) => v.userId === userId)
+    setWordList([...userList])
+  }
+
+  useEffect(() => {
+    getWordList()
+  }, [])
+
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -39,7 +55,7 @@ const AddWord = () => {
       return
     }
 
-    const haveWord = wordList.filter((item) => formData.get('word') === item.word)
+    const haveWord = wordLIst.filter((item) => formData.get('word') === item.word)
 
     if (haveWord.length > 0 
       && wordInputRef.current !== null

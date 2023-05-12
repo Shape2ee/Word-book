@@ -6,15 +6,12 @@ import Title from '@components/Title';
 import Button from '@components/Button';
 import Icon from '@components/Icon';
 import WordList from '@components/WordList';
-import { deleteWord, updateWord } from '@customModules/wordSlice';
+// import { deleteWord, updateWord } from '@customModules/wordSlice';
 import Search from '@components/Search';
 import { WordListType } from '@customTypes/CustumTypes';
 import Wrapper from '@components/Wrapper';
 import { fetcher } from '@api/Fetcher';
 import { METHOD } from '@customTypes/CustumTypes';
-// import axios from 'axios'
-
-// axios.defaults.baseURL = 'http://localhost:8000'
 
 const Main = () => {
   // const userId = useAppSelector((state) => state.user.userId)
