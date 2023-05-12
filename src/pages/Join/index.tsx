@@ -225,7 +225,7 @@ const Join = () => {
             <span className={cx('input_box', joinPw1Focus ? 'focus' : '')} 
               onClick={() => handleInputFocus('joinPw1Focus')}
               onBlur={() => handleInputBlur('joinPw1Focus')}>
-              <input type='text' name='joinPw1' id='joinPw1'
+              <input type='password' name='joinPw1' id='joinPw1'
                 ref={joinPw1Ref}
                 value={joinPw1} onChange={handleJoinInputChange}/>
               <span className={cx('confirm_box', isPw1Error ? 'error' : isPassword1Success ? 'success' : '')}>
@@ -244,7 +244,7 @@ const Join = () => {
             <span className={cx('input_box', joinPw2Focus ? 'focus' : '')}
               onClick={() => handleInputFocus('joinPw2Focus')}
               onBlur={() => handleInputBlur('joinPw2Focus')}>
-              <input type='text' name='joinPw2' id='joinPw2'
+              <input type='password' name='joinPw2' id='joinPw2'
                 ref={joinPw2Ref}
                 value={joinPw2} onChange={handleJoinInputChange}/>
               <span className={cx('confirm_box', isPw2Error ? 'error' : isPassword2Success ? 'success' : '')}>
