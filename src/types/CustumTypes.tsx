@@ -8,6 +8,10 @@ export interface WordListType extends WordType {
   userId: string,
   timetamp: number,
 }
+export interface User {
+  userId: string,
+  userPw: string
+}
 
 export const enum METHOD {
   GET = 'get',
@@ -18,13 +22,10 @@ export const enum METHOD {
 
 export interface JoinInputs {
   joinId: string,
-  joinPw1: string,
-  joinPw2: string
-}
-
-export interface JoinInputsFocus {
   joinIdFocus: boolean,
+  joinPw1: string,
   joinPw1Focus: boolean,
+  joinPw2: string,
   joinPw2Focus: boolean
 }
 
