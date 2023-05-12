@@ -76,3 +76,9 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .join_container {
+    height: calc(100vh - 10rem);
+  }
+}

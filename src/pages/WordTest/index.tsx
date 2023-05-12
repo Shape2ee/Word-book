@@ -38,14 +38,9 @@ const WordTest = () => {
     }
   }
 
-  const handleModalClick = (path: string) => {
-    navgigate(path)
-    setModal(false)
-  }
-
   return (
     <div className={$.word_test_container}>
-      {isModal && <Modal text={`${ModalText} 문제의 단어 시험을 보시겠습니까?`} onCLick={handleModalClick}/>}
+      {isModal && <Modal text={`${ModalText} 문제의 단어 시험을 보시겠습니까?`} go='/start' back='./'/>}
       <Wrapper>
         <div className={$.word_test_wrapper}>
           <Title text='단어 시험'/>

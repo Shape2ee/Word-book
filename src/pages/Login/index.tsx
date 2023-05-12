@@ -22,7 +22,6 @@ const Login = () => {
   const navigate = useNavigate()
   const passwordRef = useRef<HTMLInputElement>(null)
   const [usersInfo, setUsersInfo] = useState<any[]>([])
-  const [isResult, setResult] = useState<boolean>(false)
   const [userIdInput, setUserIdInput] = useState<string>('')
   const [userPwInput, setUserPwInput] = useState<string>('')
   const [isNotPwMatched, setNotPwMatched] = useState<boolean>(false)
@@ -31,7 +30,6 @@ const Login = () => {
     idFocus: false,
     passwordFocus: false,
   });
-  
   const { idFocus, passwordFocus } = isInputFocus;
 
   const getUsersData = async () => {
@@ -51,35 +49,28 @@ const Login = () => {
     }
   }
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    console.log(usersInfo)
-    const formData = new FormData(e.currentTarget)
-
-    for (let i = 0; i < usersInfo.length; i++) {
-      if (usersInfo[i].userId !== formData.get('userId')) {
-        alert('아이디가 존재하지 않습니다!')
-        setUserIdInput('')
-        setUserPwInput('')
-        return
-      }
-
-      if (usersInfo[i].userPw !== formData.get('userPw')) {
-        setNotPwMatched(true)
-        setUserIdInput('')
-        setUserPwInput('')
-        return
-      }
-      
-      setNotPwMatched(false)
-      setResult(true)
-      sessionStorage.setItem('user', usersInfo[i].userId)
-      navigate('/')
+    if (userIdInput === '' || userPwInput === '') return
+    const userIdList = await usersInfo.map((item) => item.userId)
+    if (!userIdList.includes(userIdInput)) {
+      alert('아이디가 존재하지 않습니다!')
+      setUserIdInput('')
+      setUserPwInput('')
+      return
     }
-    console.log(userIdInput)
-    console.log(formData.get('userId'), formData.get('userPw'))
-    console.log(isResult)
+
+    const IdIndex = await userIdList.indexOf(userIdInput)
+    if (IdIndex < 0) return
+    if (usersInfo[IdIndex].userPw !== userPwInput) {
+      setNotPwMatched(true)
+      setUserIdInput('')
+      setUserPwInput('')
+      return
+    }
+    await setNotPwMatched(false)
+    sessionStorage.setItem('user', usersInfo[IdIndex].userId)
+    navigate('/')
   }
   
   const resetInputValue = (e: React.MouseEvent) => {
@@ -106,8 +97,6 @@ const Login = () => {
   }
   
   const handleFocusInput = (input: string) => {
-    // console.log(isInputFocue[input])
-    console.log(idFocus)
     setInputFocus((prev) => {
       return {
         ...prev,
@@ -117,8 +106,6 @@ const Login = () => {
   }
 
   const handleBlurInput = (input: string) => {
-    // console.log(isInputFocue[input])
-    console.log(idFocus)
     setInputFocus((prev) => {
       return {
         ...prev,
@@ -126,6 +113,10 @@ const Login = () => {
       }
     });
   };
+
+  const goJoin = () => {
+    navigate('/join')
+  }
 
   return (
     <Wrapper>
@@ -161,7 +152,7 @@ const Login = () => {
             {
               userPwInput && <ResetButton icon='cancell' onClick={resetInputValue}/>
             }
-            {isNotPwMatched && <div className={$.not_password}>비밀번호가 틀렸습니다. 다시 입력해 주세요.</div>}
+            {isNotPwMatched && <span className={$.not_password}>비밀번호가 틀렸습니다. 다시 입력해 주세요.</span>}
           </div>
           <div className={$.show_password_button}>
             <label>
@@ -171,10 +162,10 @@ const Login = () => {
             </label>
           </div>
           <Button text='로그인' width fillMain height6/>
+          </form>
           <div className={$.join_button}>
-            <Button text='회원가입' />
+            <Button text='회원가입' onClick={goJoin}/>
           </div>
-        </form>
       </div>
     </Wrapper>
   );

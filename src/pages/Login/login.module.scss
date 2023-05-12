@@ -2,6 +2,7 @@
 
 .login_container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -36,6 +37,7 @@
     }
     
     .not_password {
+      display: block;
       margin-top: 1rem;
       font-size: 1.2rem;
       color: #ff0000;
@@ -85,8 +87,13 @@
   }
 
   .join_button {
+    width: 400px;
     margin-top: 2rem;
     text-align: right;
+
+    button:hover {
+      text-decoration: underline;
+    }
   }
 }
 
