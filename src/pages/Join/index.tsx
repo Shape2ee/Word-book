@@ -163,10 +163,11 @@ const Join = () => {
 
   }
   
-  const inputFocusCheck = (input:string, input1: string, input2: string) => {
-    if (input === input1) {
+  const inputFocusCheck = (input:string) => {
+    console.log(input)
+    if (input === 'joinIdFocus') {
       joinIdRef.current?.focus()
-    } else if (input === input2) {
+    } else if (input === 'joinPw1Focus') {
       joinPw1Ref.current?.focus()
     } else {
       joinPw2Ref.current?.focus()
@@ -180,7 +181,7 @@ const Join = () => {
         [input]: true
       }
     })
-    inputFocusCheck(input, 'joinIdFocus', 'joinPw1Focus')
+    inputFocusCheck(input)
   }
 
   const handleInputBlur = (input: string) => {
@@ -208,21 +209,13 @@ const Join = () => {
             <h3 className={$.join_title}>
               <label htmlFor='joinId'>아이디</label>
             </h3>
-            <Input 
-              value={joinId}
-              ref={joinIdRef}
-              focus={joinIdFocus}
-              onChange={handleJoinInputChange}
+            <span className={cx('input_box', 'input_id', joinIdFocus ? 'focus' : '')} 
               onClick={() => handleInputFocus('joinIdFocus')}
-              onBlur={() => handleInputBlur('joinIdFocus')}
-              />
-            {/* <span className={cx('input_box', 'input_id', joinIdFocus ? 'focus' : '')} 
-              onClick={}
-              onBlur={}>
+              onBlur={() => handleInputBlur('joinIdFocus')}>
               <input type='text' name='joinId' id='joinId'
                 ref={joinIdRef}
                 value={joinId} onChange={handleJoinInputChange}/>
-            </span> */}
+            </span>
             {isIdNoneValue && <span className={$.error_title}>필수 정보입니다.</span>}
             {isIdDuplication && <span className={$.error_title}>이미 사용중인 아이디입니다.</span>}
             {isIdError && <span className={$.error_title}>5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</span>}

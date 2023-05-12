@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import $ from './input.module.scss'
 import classNames from 'classnames/bind';
 
@@ -13,7 +13,7 @@ interface InputProps {
 }
 
 const cx = classNames.bind($)
-const Input = ({children, focus, onClick, onBlur, ref, value, onChange}: InputProps) => {
+const Input = ({children, focus, onClick, onBlur, ref, value, onChange}: InputProps) => {  
   return (
     <span className={cx('input_box', 'input_id', focus ? 'focus' : '')} 
       onClick={onClick}
