@@ -72,6 +72,12 @@ const AddWord = () => {
       word: formData.get('word'),
       text: formData.get('wordMeaning'),
     }
+    const {word, text} = addWordData
+    const regex = /[^a-z\s]/g
+    if (word === null) return 
+    const checkAddWord = regex.test(word.toString())
+    if (checkAddWord) return
+    
     fetcher(METHOD.POST, '/wordList', {
       word: addWordData.word,
       text: addWordData.text,
