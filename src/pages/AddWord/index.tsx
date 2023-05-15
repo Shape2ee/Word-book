@@ -116,9 +116,6 @@ const AddWord = () => {
                 <Button type={'submit'} text='저장' width fillMain />
               </div>
             </form>
-            <Button text='영어 단어 검색해보기' onClick={goTranslation} width border height6 >
-              <Icon kinds='search'/>
-            </Button>
           </div>
         </div>
       )
