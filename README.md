@@ -22,6 +22,8 @@ Test Password: test123
 ```
 
 - 메인 페이지 & 단어 추가
+![gif](https://github.com/Shape2ee/Word-book/assets/94235862/2c0cf23e-95dc-46c1-a8a5-040b2d4fa57e)
+
 - 단어게임 페이지
 - 로그인 & 회원가입
 
