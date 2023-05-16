@@ -1,4 +1,4 @@
-# 🖥https://my-word-book.vercel.app/
+# 📘https://my-word-book.vercel.app/
 나만의 단어장은 영어 공부를 도와줄 영어 단어장입니다.<br>
 다양한 연령의 누구나 자기만의 단어장을 만들어 사용하며,<br>
 저장해 둔 단어들을 게임으로 테스트하면서,<br>
@@ -25,14 +25,17 @@ Test Password: test123
 ![gif](https://github.com/Shape2ee/Word-book/assets/94235862/2c0cf23e-95dc-46c1-a8a5-040b2d4fa57e)
 
 - 단어게임 페이지
+![gif1](https://github.com/Shape2ee/Word-book/assets/94235862/87bd7f16-673c-4a36-8acb-c729591bd298)
+
 - 로그인 & 회원가입
+![gif2](https://github.com/Shape2ee/Word-book/assets/94235862/253e79f6-981e-4cba-b4df-f41cc097fc59)
 
 ---
 ## ⚙사용 기술
 
 - Frontend:
   - React, React Router
-  - Redux,
+  - Redux
   - TypeScript, Sass,
   - Axios, Vite
   
