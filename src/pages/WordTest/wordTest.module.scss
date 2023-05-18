@@ -22,10 +22,10 @@
     max-width: 400px;
 
     button {
-      transition: background 0.3s, color 0.3s;
+      transition: background 0.3s;
     }
     button:hover {
-      background-color: var(--color-main);
+      background-color: var(--color_main);
       color: #fff;
     }
   }

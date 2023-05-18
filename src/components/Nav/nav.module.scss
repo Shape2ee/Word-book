@@ -2,13 +2,13 @@
 @import "@styles/_variables.scss";
 .nav_container {
   margin-top: 4rem;
-  // height: 100%;
 
   li {
     position: relative;
     display: flex;
     align-items: center;
     font-size: 1.6rem;
+    color: var(--color_caption1);
     
     a {
       padding: 2rem 0;
@@ -19,7 +19,7 @@
     }
 
     &.active {
-      color: var(--color-main);
+      color: var(--color_main);
     }
 
     &.active::after {
@@ -30,7 +30,7 @@
       display: block;
       width: 4px;
       height: 100%;
-      background-color: var(--color-main);
+      background-color: var(--color_main);
       border-radius: 2px;
     }
   }

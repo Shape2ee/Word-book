@@ -3,6 +3,7 @@
 .btn {
   background-color: transparent;
   font-size: 1.4rem;
+  color: var(--color_caption1);
   svg {
     margin-right: 0.4rem;
   }
@@ -11,18 +12,22 @@
     place-content: center;
     width: 4.6rem;
     height: 4.6rem;
-    background-color: var(--color-white);
+    background-color: var(--color_button);
     border-radius: 3rem; 
   }
   &.fillWhite {
     padding: 0 1.2rem;
     height: 4.6rem;
-    background-color: var(--color-white);
+    background-color: var(--color_button);
     border-radius: 3rem; 
+
   }
   &.fillMain {
     color: $G-color-white;
-    background-color: var(--color-main);
+    background-color: var(--color_main);
+  }
+  &.fillMain:hover {
+    opacity: 0.9;
   }
   &.width {
     width: 100%;
@@ -31,10 +36,14 @@
     height: 6rem;
   }
   &.border {
-    border: 1px solid var(--color-gray555);
+    border: 1px solid var(--color_border2);
+
+    &:hover {
+      background-color: var(--color_button);
+    }
   }
   &.color {
-    color: $G-color-main;
+    color: var(--color_main);
   }
   &.IconMargin0 {
     svg {

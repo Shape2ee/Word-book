@@ -5,9 +5,10 @@ import Button from '@components/Button'
 import Icon from '@components/Icon'
 import classNames from 'classnames/bind'
 import Modal from '@components/Modal'
-import { JoinInputs, PasswordCheck, User } from '@customTypes/CustumTypes'
+import { JoinInputs, PasswordCheck } from '@customTypes/CustumTypes'
 import { METHOD } from '@customTypes/CustumTypes'
 import { fetcher } from '@api/Fetcher'
+import { useNavigate } from 'react-router-dom'
 
 const cx = classNames.bind($)
 
@@ -37,7 +38,11 @@ const Join = () => {
   const [isPassword1Success, setPassword1Succedd] = useState<boolean>(false)
   const [isPassword2Success, setPassword2Succedd] = useState<boolean>(false)
   const [isModal, setModal] = useState<boolean>(false)
-  
+  const navigate = useNavigate()
+  const goHome = () => {
+    navigate('/')
+  }
+
   const handleJoinInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.name)
     setJoinInputs((prev) => {
@@ -257,7 +262,7 @@ const Join = () => {
           </div>
           <Button text='가입하기' width fillMain height6 marginTop />
         </form>
-        {isModal && <Modal text='가입을 축하드립니다. 로그인 하시겠습니까?' go='/login' back='/'/>}
+        {isModal && <Modal text='가입을 축하드립니다. 로그인 하시겠습니까?' go='/login' back={goHome}/>}
       </div>
     </Wrapper>
   )

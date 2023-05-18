@@ -21,11 +21,6 @@ const AddWord = () => {
   const goBack = () => {
     navigate('../')
   }
-
-  const goTranslation = () => {
-    navigate('./translation')
-  }
-
   
   const getWordList = async () => {
     const res  = await fetcher(METHOD.GET, '/wordList')

@@ -6,7 +6,7 @@
   padding: 1rem 10rem 1rem 1.5rem;
   width: 100%;
   height: 6rem;
-  background-color: var(--color-white);
+  background-color: var(--color_setting_bg);
   border: 1px solid transparent;
   cursor: text;
 
@@ -20,6 +20,6 @@
     padding: 1rem 1.5rem;
   }
   &.focus {
-    border-color: var(--color-main);
+    border-color: var(--color_main);
   }
 }

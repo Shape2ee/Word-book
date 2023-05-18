@@ -12,7 +12,7 @@
     display: none;
 
     &:checked + svg {
-      color: var(--color-main);
+      color: var(--color_main);
     }
   }
 }

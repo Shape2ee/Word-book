@@ -3,7 +3,7 @@ import Button from '@components/Button'
 import $ from './modal.module.scss'
 import { useNavigate } from 'react-router-dom';
 
-const Modal = ({text, go, back}: { text: string, go:string, back:string }) => {
+const Modal = ({text, go, back}: { text: string, go:string, back:() => void }) => {
   const navigate = useNavigate()
 
   const handleModalClick = (path: string) => {
@@ -16,7 +16,7 @@ const Modal = ({text, go, back}: { text: string, go:string, back:string }) => {
         <h3>{text}</h3>
         <div className={$.btn_wrap}>
           <Button text='확인' onClick={() => handleModalClick(go)} width height6 fillMain />
-          <Button text='취소' onClick={() => handleModalClick(back)} width height6 border />
+          <Button text='취소' onClick={back} width height6 border />
         </div>
       </div>
     </div>

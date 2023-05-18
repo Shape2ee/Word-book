@@ -39,7 +39,7 @@ const WordTest = () => {
 
   return (
     <div className={$.word_test_container}>
-      {isModal && <Modal text={`${ModalText} 문제의 단어 시험을 보시겠습니까?`} go='./start' back='./'/>}
+      {isModal && <Modal text={`${ModalText} 문제의 단어 시험을 보시겠습니까?`} go='./start' back={() => setModal(false)}/>}
       <Wrapper>
         <div className={$.word_test_wrapper}>
           <Title text='단어 시험'/>
