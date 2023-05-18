@@ -19,6 +19,8 @@ import {
   BsShieldFillX,
   BsShieldCheck,
   BsShieldLock,
+  BsFillSunFill,
+  BsFillMoonFill
 } from "react-icons/bs";
 
 interface IconButtonList {
@@ -106,5 +108,13 @@ export const ICON_BUTTON_LIST: IconButtonList[] = [
   {
     kinds: 'shieldLock',
     element: <BsShieldLock />
+  },
+  {
+    kinds: 'light',
+    element: <BsFillSunFill />
+  },
+  {
+    kinds: 'dark',
+    element: <BsFillMoonFill />
   },
 ]

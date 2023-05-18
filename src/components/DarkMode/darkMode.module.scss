@@ -1,0 +1,19 @@
+@charset 'utf-8';
+.darkMode_btn_wrapper {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  display: grid;
+  place-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-white);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--color-line), 0 4px 8px 0 rgba(0,0,0,0.15);;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f7f7f8;
+    box-shadow: 0 0 0 1px var(--color-line), 0 4px 8px 0 rgba(0,0,0,0.3);;
+  }
+}

@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import Wrapper from '@components/Wrapper';
 import Header from '@components/Header'
 import Nav from '@components/Nav'
+import DarkMode from '@components/DarkMode';
 
 const Layout = () => {
   return (
@@ -14,6 +15,7 @@ const Layout = () => {
     <div className={$.container}>
       <Outlet />
     </div>
+    <DarkMode />
     </>
   );
 };
