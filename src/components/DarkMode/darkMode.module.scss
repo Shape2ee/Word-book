@@ -13,7 +13,17 @@
   cursor: pointer;
 
   &:hover {
-    background-color: #f7f7f8;
+    background-color: var(--color_button2);
+    color: var(--color_main);
     box-shadow: 0 0 0 1px var(--color_border1), 0 4px 8px 0 rgba(0,0,0,0.3);;
+  }
+}
+html[data-theme=DARK] {
+  .darkMode_btn_wrapper {
+    color: #fff;
+
+    &:hover {
+      color: var(--color_main);
+    }
   }
 }

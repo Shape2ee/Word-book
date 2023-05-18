@@ -166,8 +166,8 @@ const Main = () => {
             >
               <Icon kinds={btnIconState}/>
             </Button>
-            {edit && <Button text='삭제' onClick={handelClickDelete} cercle />}
-            <Button text={btnModeState} onClick={handleClickEdit} cercle
+            {edit && <Button text='삭제' onClick={handelClickDelete} cercle fillWhite padding0 />}
+            <Button text={btnModeState} onClick={handleClickEdit} cercle fillWhite padding0
               color={btnModeState === '완료' ? true : false}
             />
           </div>
