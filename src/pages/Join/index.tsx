@@ -5,6 +5,7 @@ import Button from '@components/Button'
 import Icon from '@components/Icon'
 import classNames from 'classnames/bind'
 import Modal from '@components/Modal'
+import InputRow from './InputRow'
 import { JoinInputs, PasswordCheck } from '@customTypes/CustumTypes'
 import { METHOD } from '@customTypes/CustumTypes'
 import { fetcher } from '@api/Fetcher'
@@ -12,6 +13,9 @@ import { useNavigate } from 'react-router-dom'
 
 const cx = classNames.bind($)
 
+const CONSTANTS = {
+  
+}
 const Join = () => {
   const joinIdRef = useRef<HTMLInputElement>(null)
   const joinPw1Ref = useRef<HTMLInputElement>(null)
@@ -61,6 +65,11 @@ const Join = () => {
     }
     setIdNoneValue(false)
 
+    if (joinId.length < 5 || joinId.length > 20) {
+      await setIdError(true)
+      return
+    }
+
     const users = await fetcher(METHOD.GET, '/users')
     for (let i = 0; i < users.length; i++) {
       if (users[i].userId === joinId) {
@@ -69,10 +78,7 @@ const Join = () => {
       }
     }
     setIdDuplication(false)
-    if (joinId.length < 5 || joinId.length > 20) {
-      await setIdError(true)
-      return
-    }
+
     const regex = /[^a-z\d-_]/g
     const checkId = await regex.test(joinId)
     if (checkId) {
@@ -209,57 +215,46 @@ const Join = () => {
     <Wrapper>
       <div className={$.join_container}>
         <form onSubmit={handleJoinSubmit}>
-          <div className={$.input_row}>
-            <h3 className={$.join_title}>
-              <label htmlFor='joinId'>아이디</label>
-            </h3>
-            <span className={cx('input_box', 'input_id', joinIdFocus ? 'focus' : '')} 
-              onClick={() => handleInputFocus('joinIdFocus')}
-              onBlur={() => handleInputBlur('joinIdFocus')}>
-              <input type='text' name='joinId' id='joinId'
-                ref={joinIdRef}
-                value={joinId} onChange={handleJoinInputChange}/>
-            </span>
-            {isIdNoneValue && <span className={$.error_title}>필수 정보입니다.</span>}
-            {isIdDuplication && <span className={$.error_title}>이미 사용중인 아이디입니다.</span>}
-            {isIdError && <span className={$.error_title}>5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</span>}
-          </div>
-          <div className={$.input_row}>
-            <h3 className={$.join_title}>
-              <label htmlFor='joinPw1'>비밀번호</label>
-            </h3>
-            <span className={cx('input_box', joinPw1Focus ? 'focus' : '')} 
-              onClick={() => handleInputFocus('joinPw1Focus')}
-              onBlur={() => handleInputBlur('joinPw1Focus')}>
-              <input type='password' name='joinPw1' id='joinPw1'
-                ref={joinPw1Ref}
-                value={joinPw1} onChange={handleJoinInputChange}/>
-              <span className={cx('confirm_box', isPw1Error ? 'error' : isPassword1Success ? 'success' : '')}>
-                {isPw1Error && <span>사용불가</span>}
-                {isPassword1Success && <span>사용가능</span>}
-                <Icon kinds={isPw1Error ? 'shieldFillX': 'shieldLock'}/>
-              </span>
-            </span>
-            {isPw1NoneValue && <span className={$.error_title}>필수 정보입니다.</span>}
-            {isPw1Error && <span className={$.error_title}>8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</span>}
-          </div>
-          <div className={$.input_row}>
-            <h3 className={$.join_title}>
-              <label htmlFor='joinPw2'>비밀번호 확인</label>
-            </h3>
-            <span className={cx('input_box', joinPw2Focus ? 'focus' : '')}
-              onClick={() => handleInputFocus('joinPw2Focus')}
-              onBlur={() => handleInputBlur('joinPw2Focus')}>
-              <input type='password' name='joinPw2' id='joinPw2'
-                ref={joinPw2Ref}
-                value={joinPw2} onChange={handleJoinInputChange}/>
-              <span className={cx('confirm_box', isPw2Error ? 'error' : isPassword2Success ? 'success' : '')}>
-                <Icon kinds={isPw2NoneValue ? 'shieldCheck' : isPassword2Success ? 'shieldFillCheck' : 'shieldCheck'}/>
-              </span>
-            </span>
-            {isPw2NoneValue && <span className={$.error_title}>필수 정보입니다.</span>}
-            {isPw2Error && <span className={$.error_title}>비밀번호가 일치하지 않습니다.</span>}
-          </div>
+          <InputRow title='아이디' name='joinId' inputId
+            inputType='text'
+            focus={joinIdFocus} 
+            forwardedRef={joinIdRef}
+            value={joinId}
+            onClick={() => handleInputFocus('joinIdFocus')}
+            onBlur={() => handleInputBlur('joinIdFocus')}
+            onChange={handleJoinInputChange}
+            isNoneValue={isIdNoneValue}
+            isIdDuplication={isIdDuplication}
+            isIdError={isIdError}
+          />
+          <InputRow title='비밀번호' name='joinPw1'
+            inputType='password'
+            focus={joinPw1Focus}
+            forwardedRef={joinPw1Ref}
+            value={joinPw1}
+            onClick={() => handleInputFocus('joinPw1Focus')}
+            onBlur={() => handleInputBlur('joinPw1Focus')}
+            onChange={handleJoinInputChange}
+            confirmBox
+            isError={isPw1Error}
+            isPasswordSuccess={isPassword1Success}
+            isNoneValue={isPw1NoneValue}
+            isPwError={isPw1Error}
+          />
+          <InputRow title='비밀번호 확인' name='joinPw2'
+            inputType='password'
+            focus={joinPw2Focus}
+            forwardedRef={joinPw2Ref}
+            value={joinPw2}
+            onClick={() => handleInputFocus('joinPw2Focus')}
+            onBlur={() => handleInputBlur('joinPw2Focus')}
+            onChange={handleJoinInputChange}
+            confirmBox
+            isError={isPw2Error}
+            isPasswordSuccess={isPassword2Success}
+            isNoneValue={isPw2NoneValue}
+            isPwSame={isPw2Error}
+          />
           <Button text='가입하기' width fillMain height6 marginTop />
         </form>
         {isModal && <Modal text='가입을 축하드립니다. 로그인 하시겠습니까?' go='/login' back={goHome}/>}
