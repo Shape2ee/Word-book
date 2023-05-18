@@ -13,9 +13,6 @@ import { useNavigate } from 'react-router-dom'
 
 const cx = classNames.bind($)
 
-const CONSTANTS = {
-  
-}
 const Join = () => {
   const joinIdRef = useRef<HTMLInputElement>(null)
   const joinPw1Ref = useRef<HTMLInputElement>(null)
