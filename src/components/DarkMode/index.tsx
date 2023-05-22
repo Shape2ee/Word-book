@@ -34,7 +34,7 @@ const DarkMode = () => {
 
   useEffect(() => {
     handleCheckTheme()
-  },[isDarkMode])
+  },[])
 
   const handleChangeTheme = async () => {
     await setDarkMode(!isDarkMode)
