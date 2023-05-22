@@ -216,7 +216,7 @@ const Join = () => {
           <InputRow title='아이디' name='joinId' inputId
             inputType='text'
             focus={joinIdFocus} 
-            forwardedRef={joinIdRef}
+            ref={joinIdRef}
             value={joinId}
             onClick={() => handleInputFocus('joinIdFocus')}
             onBlur={() => handleInputBlur('joinIdFocus')}
@@ -228,7 +228,7 @@ const Join = () => {
           <InputRow title='비밀번호' name='joinPw1'
             inputType='password'
             focus={joinPw1Focus}
-            forwardedRef={joinPw1Ref}
+            ref={joinPw1Ref}
             value={joinPw1}
             onClick={() => handleInputFocus('joinPw1Focus')}
             onBlur={() => handleInputBlur('joinPw1Focus')}
@@ -242,7 +242,7 @@ const Join = () => {
           <InputRow title='비밀번호 확인' name='joinPw2'
             inputType='password'
             focus={joinPw2Focus}
-            forwardedRef={joinPw2Ref}
+            ref={joinPw2Ref}
             value={joinPw2}
             onClick={() => handleInputFocus('joinPw2Focus')}
             onBlur={() => handleInputBlur('joinPw2Focus')}

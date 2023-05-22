@@ -9,7 +9,6 @@ interface InputRowProps {
   title: string,
   name: string,
   focus: boolean,
-  forwardedRef: any,
   value: string,
   inputType: string,
   confirmBox?: boolean,
@@ -19,11 +18,11 @@ interface InputRowProps {
   onClick: () => void,
   onBlur: () => void,
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  isNoneValue?:boolean,
-  isIdDuplication?:boolean,
-  isIdError?:boolean,
-  isPwError?:boolean,
-  isPwSame?:boolean,
+  isNoneValue?: boolean,
+  isIdDuplication?: boolean,
+  isIdError?: boolean,
+  isPwError?: boolean,
+  isPwSame?: boolean,
 }
 
 const InputRow = forwardRef(({
@@ -31,7 +30,6 @@ const InputRow = forwardRef(({
   title,
   name,
   focus,
-  forwardedRef,
   value,
   inputType,
   confirmBox,
@@ -45,8 +43,8 @@ const InputRow = forwardRef(({
   isIdDuplication,
   isIdError,
   isPwError,
-  isPwSame
- }: InputRowProps) => {
+  isPwSame}: InputRowProps, ref: React.ForwardedRef<HTMLInputElement>) => {
+
   return (
     <div className={$.input_row}>
       <h3 className={$.join_title}>
@@ -56,7 +54,7 @@ const InputRow = forwardRef(({
         onClick={onClick}
         onBlur={onBlur}>
         <input type={inputType} name={name} id={name}
-          ref={forwardedRef}
+          ref={ref}
           value={value} onChange={onChange}/>
         {confirmBox && <span className={cx('confirm_box', isError ? 'error' : isPasswordSuccess ? 'success' : '')}>
           {isError && <span>사용불가</span>}
@@ -74,4 +72,5 @@ const InputRow = forwardRef(({
   )
 })
 
+InputRow.displayName = "InputRow";
 export default InputRow
