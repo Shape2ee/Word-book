@@ -47,8 +47,7 @@
 
     &:not(.active):hover::after {
       display: block;
-      background-color: var(--color_button2);
-      color: var(color_title)
+      background-color: var(--color_border2);
     }
     
   }
