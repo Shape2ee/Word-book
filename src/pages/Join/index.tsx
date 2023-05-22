@@ -58,6 +58,7 @@ const Join = () => {
     if (joinId === '') {
       await setIdNoneValue(true)
       setIdError(false)
+      setIdDuplication(false)
       return
     }
     setIdNoneValue(false)
