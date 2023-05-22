@@ -36,11 +36,15 @@
     }
 
     &.active {
-      display: block;
       color: var(--color_main);
     }
 
-    &:hover {
+    &.active::after {
+      display: block;
+    }
+
+
+    &:hover::after {
       display: block;
       background-color: var(--color_button2);
       color: var(color_title)
