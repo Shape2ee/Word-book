@@ -21,14 +21,20 @@ const DarkMode = () => {
     localStorage.setItem('Dark', 'false')
     document.documentElement.setAttribute('data-theme', 'LIGHT')
   }
+
   const handleCheckTheme = async () => {
+    const osTheme = await window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (osTheme) {
+      handleSetTheme(osTheme)
+      return
+    }
     const theme = await localStorage.getItem('Dark')
     handleSetTheme(theme === 'true')
   }
 
   useEffect(() => {
     handleCheckTheme()
-  },[])
+  },[isDarkMode])
 
   const handleChangeTheme = async () => {
     await setDarkMode(!isDarkMode)
