@@ -64,17 +64,21 @@ html[data-theme=DARK] {
 @media screen and (max-width: 768px) {
   .nav_container {
      margin: 0;
+     padding: 0;
+     border: none;
 
     ul {
     display: flex;
     }
 
     li {
+      margin: 0;
       margin-left: 2rem;
 
       a {
         display: flex;
         justify-content: center;
+        padding: 2rem 0;
         width: 4rem;
       }
 
