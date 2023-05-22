@@ -63,11 +63,6 @@ const Join = () => {
     }
     setIdNoneValue(false)
 
-    if (joinId.length < 5 || joinId.length > 20) {
-      await setIdError(true)
-      return
-    }
-
     const users = await fetcher(METHOD.GET, '/users')
     for (let i = 0; i < users.length; i++) {
       if (users[i].userId === joinId) {
@@ -76,6 +71,11 @@ const Join = () => {
       }
     }
     setIdDuplication(false)
+
+    if (joinId.length < 5 || joinId.length > 20) {
+      await setIdError(true)
+      return
+    }
 
     const regex = /[^a-z\d-_]/g
     const checkId = await regex.test(joinId)
