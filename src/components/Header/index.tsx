@@ -53,7 +53,8 @@ const Header = ({ children }: { children: ReactNode }) => {
       <h1 onClick={goMain}>Word Book</h1>
       {children}
       <div onBlur={handleBlurLoginContainer} className={isLogin ? $.login : ''}>
-        <button className={cx('mobile_login_container', activeLoginContainer ? 'active' : '')} onClick={handleOpenLoginContainer}>
+        <button className={cx('mobile_login_container', activeLoginContainer ? 'active' : '')}
+          onClick={handleOpenLoginContainer}>
           <Icon kinds='user' />
         </button>
         <div className={$.login_container}>

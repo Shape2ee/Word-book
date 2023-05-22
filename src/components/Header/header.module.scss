@@ -20,10 +20,11 @@
   }
 
   .mobile_login_container {
+    position: relative;
     display: none;    
     width: 4rem;
     margin-left: 2rem;
-    color: var(--color_title);
+    color: var(--color_caption1);
     cursor: pointer;
 
     svg {
@@ -70,10 +71,29 @@
 
     .mobile_login_container {
       display: block;
+      padding: 2rem 0;
       background-color: transparent;
 
-      &.active {
-        color: var(--color_main);
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        display: none;
+        width: 100%;
+        height: calc(100% - 0.5rem);
+        background-color: var(--color_border2);
+        border-radius: 10px;
+        opacity: 0.2;
+      }
+
+      &:hover::after {
+        display: block;
+      }
+      
+      &.active::after {
+        display: block;
       }
 
       &.active + .login_container {
